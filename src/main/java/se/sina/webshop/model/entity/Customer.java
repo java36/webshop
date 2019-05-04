@@ -34,7 +34,7 @@ public final class Customer {
 
     private String password;
 
-    public Customer() {
+    protected Customer() {
     }
 
     public Customer(UUID customerNumber, String firstname, String lastname, String socialSecurityNumber, String address, String email, Boolean active) {

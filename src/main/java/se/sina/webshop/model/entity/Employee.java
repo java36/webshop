@@ -28,6 +28,9 @@ public class Employee {
     @Column(nullable = false)
     private Boolean active;
 
+    protected Employee() {
+    }
+
     public Employee(UUID employeeNumber, String username, String password, String firstname, String lastname) {
         this.employeeNumber = employeeNumber;
         this.username = username;
