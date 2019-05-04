@@ -16,7 +16,6 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-*.properties
 
 ### NetBeans ###
 /nbproject/private/
@@ -29,9 +28,5 @@ HELP.md
 ### VS Code ###
 .vscode/
 /src/main/resources/application.properties
-src/main/java/se/sina/webshop/model/web/
-src/main/java/se/sina/webshop/repository/
-src/main/java/se/sina/webshop/resource/
-src/main/java/se/sina/webshop/service/
 src/main/resources/static/
 src/main/resources/templates/
