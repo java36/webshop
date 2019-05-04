@@ -3,6 +3,7 @@ package se.sina.webshop.model.web;
 import se.sina.webshop.model.entity.Item;
 import se.sina.webshop.model.entity.Order;
 
+import java.sql.Date;
 import java.util.UUID;
 
 public final class OrderItemWeb {
@@ -15,6 +16,8 @@ public final class OrderItemWeb {
 
     private boolean shipped;
 
+    private Date shippingDate;
+
     public OrderItemWeb() {
 
     }
@@ -24,11 +27,13 @@ public final class OrderItemWeb {
         this.order = order;
     }
 
-    public OrderItemWeb(UUID orderItemNumber, Item item, Order order, boolean shipped) {
+
+    public OrderItemWeb(UUID orderItemNumber, Item item, Order order, boolean shipped, Date shippingDate) {
         this.orderItemNumber = orderItemNumber;
         this.item = item;
         this.order = order;
         this.shipped = shipped;
+        this.shippingDate = shippingDate;
     }
 
     public UUID getOrderItemNumber() {

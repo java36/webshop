@@ -22,6 +22,8 @@ public final class OrderItem {
 
     private boolean shipped;
 
+    private Date shippingDate;
+
     protected OrderItem() {
     }
 
@@ -68,8 +70,16 @@ public final class OrderItem {
         this.shipped = shipped;
     }
 
+    public Date getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(Date shippingDate) {
+        this.shippingDate = shippingDate;
+    }
+
     @Override
     public String toString() {
-        return String.format("id: %s, number: %s; item: %s, order: %s", id, orderItemNumber, item.getId(), order.getId());
+        return String.format("id: %s, number: %s; item: %s, order: %s shipped: %s, shipping date: %s", id, orderItemNumber, item.getId(), order.getId(), shipped, shippingDate);
     }
 }

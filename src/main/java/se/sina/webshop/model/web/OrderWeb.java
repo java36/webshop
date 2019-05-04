@@ -18,15 +18,20 @@ public final class OrderWeb {
     public OrderWeb() {
     }
 
+    public OrderWeb(UUID orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
     public OrderWeb(Date orderDate, Customer customer) {
         this.orderDate = orderDate;
         this.customer = customer;
     }
 
-    public OrderWeb(UUID orderNumber, Date orderDate, Customer customer) {
+    public OrderWeb(UUID orderNumber, Date orderDate, Customer customer, double total) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.customer = customer;
+        this.total = total;
     }
 
     public UUID getOrderNumber() {
