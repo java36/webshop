@@ -23,6 +23,9 @@ public class Order {
     @ManyToOne
     private Customer customer;
 
+    @Column(nullable = false)
+    private double total;
+
     protected Order() {
     }
 
@@ -31,6 +34,7 @@ public class Order {
         this.active = active;
         this.orderDate = orderDate;
         this.customer = customer;
+        total = 0.0;
     }
 
     public Long getId() {
@@ -69,8 +73,16 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
-        return String.format("id: %s, customer: %s, number: %s, active: %s, rental date: %s", id, customer.getId(), orderNumber, active, orderDate);
+        return String.format("id: %s, customer: %s, number: %s, active: %s, date: %s total: %s", id, customer.getId(), orderNumber, active, orderDate, total);
     }
 }
