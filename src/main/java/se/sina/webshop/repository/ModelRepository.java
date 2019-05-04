@@ -1,4 +1,7 @@
 package se.sina.webshop.repository;
 
-public interface ModelRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import se.sina.webshop.model.entity.Model;
+
+public interface ModelRepository extends JpaRepository<Model, Long> {
 }
