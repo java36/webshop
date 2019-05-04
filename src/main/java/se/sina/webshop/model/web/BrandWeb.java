@@ -4,7 +4,7 @@ import se.sina.webshop.model.entity.Category;
 
 import java.util.UUID;
 
-public class BrandWeb {
+public final class BrandWeb {
 
     private UUID brandNumber;
 

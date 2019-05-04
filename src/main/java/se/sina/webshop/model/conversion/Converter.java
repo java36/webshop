@@ -1,4 +1,7 @@
 package se.sina.webshop.model.conversion;
 
-public class Converter {
+import org.springframework.stereotype.Component;
+
+@Component
+public final class Converter {
 }

@@ -1,4 +1,16 @@
 package se.sina.webshop.resource;
 
-public class CategoryResource {
+import org.springframework.stereotype.Component;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+@Component
+@Path("categories")
+@Consumes(APPLICATION_JSON)
+@Produces(APPLICATION_JSON)
+public final class CategoryResource {
 }

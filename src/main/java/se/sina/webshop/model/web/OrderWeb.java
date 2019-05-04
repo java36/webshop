@@ -5,7 +5,7 @@ import se.sina.webshop.model.entity.Customer;
 import java.sql.Date;
 import java.util.UUID;
 
-public class OrderWeb {
+public final class OrderWeb {
 
     private UUID orderNumber;
 

@@ -1,4 +1,7 @@
 package se.sina.webshop.service;
 
-public class OrderItemService {
+import org.springframework.stereotype.Service;
+
+@Service
+public final class OrderItemService {
 }

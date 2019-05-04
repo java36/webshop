@@ -9,8 +9,8 @@ import javax.ws.rs.Produces;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Component
-@Path("items")
+@Path("orders")
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
-public final class ItemResource {
+public final class OrderResource {
 }

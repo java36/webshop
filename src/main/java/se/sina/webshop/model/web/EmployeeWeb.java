@@ -2,7 +2,7 @@ package se.sina.webshop.model.web;
 
 import java.util.UUID;
 
-public class EmployeeWeb {
+public final class EmployeeWeb {
 
     private UUID employeeNumber;
 

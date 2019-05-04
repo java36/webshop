@@ -5,7 +5,7 @@ import se.sina.webshop.model.entity.ModelStatus;
 
 import java.util.UUID;
 
-public class ModelWeb {
+public final class ModelWeb {
 
     private UUID ModelNumber;
 

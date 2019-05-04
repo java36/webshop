@@ -5,7 +5,7 @@ import se.sina.webshop.model.entity.Model;
 
 import java.util.UUID;
 
-public class ItemWeb {
+public final class ItemWeb {
 
     private UUID itemNumber;
 

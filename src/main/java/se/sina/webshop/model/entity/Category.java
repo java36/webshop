@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Category {
+public final class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Model {
+public final class Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

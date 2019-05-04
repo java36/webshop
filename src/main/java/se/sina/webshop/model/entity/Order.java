@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.UUID;
 
 @Entity(name = "[order]")
-public class Order {
+public final class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
