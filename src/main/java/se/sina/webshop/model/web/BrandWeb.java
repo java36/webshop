@@ -1,7 +1,5 @@
 package se.sina.webshop.model.web;
 
-import se.sina.webshop.model.entity.Category;
-
 import java.util.UUID;
 
 public final class BrandWeb {
@@ -10,17 +8,17 @@ public final class BrandWeb {
 
     private String name;
 
-    private Category category;
+    private CategoryWeb category;
 
     public BrandWeb() {
     }
 
-    public BrandWeb(String name, Category category) {
+    public BrandWeb(String name, CategoryWeb category) {
         this.name = name;
         this.category = category;
     }
 
-    public BrandWeb(UUID brandNumber, String name, Category category) {
+    public BrandWeb(UUID brandNumber, String name, CategoryWeb category) {
         this.brandNumber = brandNumber;
         this.name = name;
         this.category = category;
@@ -34,7 +32,7 @@ public final class BrandWeb {
         return name;
     }
 
-    public Category getCategory() {
+    public CategoryWeb getCategory() {
         return category;
     }
 }

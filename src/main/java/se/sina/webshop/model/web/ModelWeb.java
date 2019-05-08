@@ -1,6 +1,5 @@
 package se.sina.webshop.model.web;
 
-import se.sina.webshop.model.entity.Brand;
 import se.sina.webshop.model.entity.ModelStatus;
 
 import java.util.UUID;
@@ -11,27 +10,31 @@ public final class ModelWeb {
 
     private String name;
 
-    private Brand brand;
+    private BrandWeb brand;
 
     private ModelStatus modelStatus;
+
+    private double price;
 
     public ModelWeb() {
     }
 
-    public ModelWeb(String name, Brand brand) {
+    public ModelWeb(String name, BrandWeb brand, double price) {
         this.name = name;
         this.brand = brand;
+        this.price = price;
     }
 
     public ModelWeb(UUID modelNumber) {
         ModelNumber = modelNumber;
     }
 
-    public ModelWeb(UUID modelNumber, String name, Brand brand, ModelStatus modelStatus) {
+    public ModelWeb(UUID modelNumber, String name, BrandWeb brand, ModelStatus modelStatus, double price) {
         ModelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
         this.modelStatus = modelStatus;
+        this.price = price;
     }
 
     public UUID getModelNumber() {
@@ -42,11 +45,15 @@ public final class ModelWeb {
         return name;
     }
 
-    public Brand getBrand() {
+    public BrandWeb getBrand() {
         return brand;
     }
 
     public ModelStatus getModelStatus() {
         return modelStatus;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }

@@ -1,7 +1,5 @@
 package se.sina.webshop.model.web;
 
-import se.sina.webshop.model.entity.Customer;
-
 import java.sql.Date;
 import java.util.UUID;
 
@@ -11,7 +9,7 @@ public final class OrderWeb {
 
     private Date orderDate;
 
-    private Customer customer;
+    private CustomerWeb customer;
 
     private double total;
 
@@ -22,12 +20,12 @@ public final class OrderWeb {
         this.orderNumber = orderNumber;
     }
 
-    public OrderWeb(Date orderDate, Customer customer) {
+    public OrderWeb(Date orderDate, CustomerWeb customer) {
         this.orderDate = orderDate;
         this.customer = customer;
     }
 
-    public OrderWeb(UUID orderNumber, Date orderDate, Customer customer, double total) {
+    public OrderWeb(UUID orderNumber, Date orderDate, CustomerWeb customer) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.customer = customer;
@@ -42,7 +40,7 @@ public final class OrderWeb {
         return orderDate;
     }
 
-    public Customer getCustomer() {
+    public CustomerWeb getCustomer() {
         return customer;
     }
 

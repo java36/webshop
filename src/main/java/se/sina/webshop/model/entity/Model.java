@@ -39,6 +39,14 @@ public final class Model {
         modelStatus = ModelStatus.INSTORE;
     }
 
+    public Model(UUID modelNumber, String name, Brand brand, ModelStatus modelStatus, double price) {
+        ModelNumber = modelNumber;
+        this.name = name;
+        this.brand = brand;
+        this.modelStatus = modelStatus;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
@@ -81,6 +89,14 @@ public final class Model {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override

@@ -29,9 +29,8 @@ public final class Order {
     protected Order() {
     }
 
-    public Order(UUID orderNumber, Boolean active, Date orderDate, Customer customer) {
+    public Order(UUID orderNumber, Date orderDate, Customer customer) {
         this.orderNumber = orderNumber;
-        this.active = active;
         this.orderDate = orderDate;
         this.customer = customer;
         total = 0.0;

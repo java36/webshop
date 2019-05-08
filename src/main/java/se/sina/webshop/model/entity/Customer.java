@@ -37,23 +37,21 @@ public final class Customer {
     protected Customer() {
     }
 
-    public Customer(UUID customerNumber, String firstname, String lastname, String socialSecurityNumber, String address, String email, Boolean active) {
+    public Customer(UUID customerNumber, String firstname, String lastname, String socialSecurityNumber, String address, String email) {
         this.customerNumber = customerNumber;
         this.firstname = firstname;
         this.lastname = lastname;
         this.socialSecurityNumber = socialSecurityNumber;
         this.address = address;
         this.email = email;
-        this.active = active;
     }
 
-    public Customer(UUID customerNumber, String firstname, String lastname, String address, String email, Boolean active) {
+    public Customer(UUID customerNumber, String firstname, String lastname, String address, String email) {
         this.customerNumber = customerNumber;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.email = email;
-        this.active = active;
     }
 
     public Long getId() {
