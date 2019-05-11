@@ -18,12 +18,6 @@ public final class Converter {
         return new Employee(employeeWeb.getEmployeeNumber(), employeeWeb.getUsername(), employeeWeb.getPassword(), employeeWeb.getFirstname(), employeeWeb.getLastname());
     }
 
-    public List<EmployeeWeb> convertEmployeeList(List<Employee> employees){
-        List<EmployeeWeb> employeeWebs = new ArrayList<>();
-        employees.forEach(employee -> employeeWebs.add(convertFrom(employee)));
-        return employeeWebs;
-    }
-
     public Category convertFrom(CategoryWeb categoryWeb){
         return new Category(categoryWeb.getCategoryNumber(), categoryWeb.getName());
     }
@@ -78,6 +72,47 @@ public final class Converter {
 
     public OrderItemWeb convertFrom(OrderItem orderItem){
         return new OrderItemWeb(orderItem.getOrderItemNumber(), convertFrom(orderItem.getItem()), convertFrom(orderItem.getOrder()));
+    }
+
+    public List<EmployeeWeb> convertEmployeeList(List<Employee> employees){
+        List<EmployeeWeb> employeeWebs = new ArrayList<>();
+        employees.forEach(employee -> employeeWebs.add(convertFrom(employee)));
+        return employeeWebs;
+    }
+    public List<CategoryWeb> convertCategoryList(List<Category> categories){
+        List<CategoryWeb> categoryWebs = new ArrayList<>();
+        categories.forEach(category -> categoryWebs.add(convertFrom(category)));
+        return categoryWebs;
+    }
+    public List<BrandWeb> convertBrandList(List<Brand> brands){
+        List<BrandWeb> brandWebs = new ArrayList<>();
+        brands.forEach(brand -> brandWebs.add(convertFrom(brand)));
+        return brandWebs;
+    }
+    public List<ModelWeb> convertModelList(List<Model> models){
+        List<ModelWeb> modelWebs = new ArrayList<>();
+        models.forEach(model -> modelWebs.add(convertFrom(model)));
+        return modelWebs;
+    }
+    public List<ItemWeb> convertItemList(List<Item> items){
+        List<ItemWeb> itemWebs = new ArrayList<>();
+        items.forEach(item -> itemWebs.add(convertFrom(item)));
+        return itemWebs;
+    }
+    public List<CustomerWeb> convertCustomerList(List<Customer> customers){
+        List<CustomerWeb> customerWebs = new ArrayList<>();
+        customers.forEach(customer -> customerWebs.add(convertFrom(customer)));
+        return customerWebs;
+    }
+    public List<OrderWeb> convertOrderList(List<Order> orders){
+        List<OrderWeb> orderWebs = new ArrayList<>();
+        orders.forEach(order -> orderWebs.add(convertFrom(order)));
+        return orderWebs;
+    }
+    public List<OrderItemWeb> convertOrderItemList(List<OrderItem> orderItems){
+        List<OrderItemWeb> orderItemWebs = new ArrayList<>();
+        orderItems.forEach(orderItem -> orderItemWebs.add(convertFrom(orderItem)));
+        return orderItemWebs;
     }
 
 }

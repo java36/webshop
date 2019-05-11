@@ -3,5 +3,11 @@ package se.sina.webshop.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.sina.webshop.model.entity.Employee;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+
+    Optional<Employee> findByUsername(String username);
+    Optional<Employee> findByEmployeeNumber(UUID employeeNumber);
 }
