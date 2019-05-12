@@ -59,6 +59,8 @@ public final class Item {
         this.model = model;
     }
 
+
+
     @Override
     public String toString() {
         return String.format("id: %s, ItemNumber: %s, Status: %s, Model %s", id, itemNumber, itemStatus, model);

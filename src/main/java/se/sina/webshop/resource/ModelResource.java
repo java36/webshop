@@ -48,7 +48,7 @@ public final class ModelResource {
 
     @GET
     public Response getModels(@BeanParam Queries queries) {
-        return Response.ok(converter.convertModelList(modelService.find(queries.getName(), queries.getCategory(), queries.getActive()))).build();
+        return Response.ok(converter.convertModelList(modelService.find(queries.getName(), queries.getBrand(), queries.getActive()))).build();
     }
 
     @GET
