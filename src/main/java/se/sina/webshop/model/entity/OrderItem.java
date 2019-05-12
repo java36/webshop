@@ -1,5 +1,7 @@
 package se.sina.webshop.model.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.UUID;
@@ -11,7 +13,8 @@ public final class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
+    @Type(type = "uuid-char")
     private UUID orderItemNumber;
 
     @ManyToOne

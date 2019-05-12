@@ -14,12 +14,12 @@ public final class ModelWeb {
 
     private ModelStatus modelStatus;
 
-    private double price;
+    private Double price;
 
     public ModelWeb() {
     }
 
-    public ModelWeb(String name, BrandWeb brand, double price) {
+    public ModelWeb(String name, BrandWeb brand, Double price) {
         this.name = name;
         this.brand = brand;
         this.price = price;
@@ -29,7 +29,7 @@ public final class ModelWeb {
         ModelNumber = modelNumber;
     }
 
-    public ModelWeb(UUID modelNumber, String name, BrandWeb brand, ModelStatus modelStatus, double price) {
+    public ModelWeb(UUID modelNumber, String name, BrandWeb brand, ModelStatus modelStatus, Double price) {
         ModelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
@@ -53,7 +53,7 @@ public final class ModelWeb {
         return modelStatus;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 }

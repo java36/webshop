@@ -1,5 +1,7 @@
 package se.sina.webshop.model.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -11,6 +13,7 @@ public final class Employee {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @Type(type = "uuid-char")
     private UUID employeeNumber;
 
     @Column(nullable = false, unique = true)

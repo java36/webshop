@@ -1,5 +1,7 @@
 package se.sina.webshop.model.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -10,7 +12,8 @@ public final class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
+    @Type(type = "uuid-char")
     private UUID customerNumber;
 
     @Column(nullable = false)

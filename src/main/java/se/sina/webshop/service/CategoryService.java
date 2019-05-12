@@ -65,8 +65,8 @@ public final class CategoryService {
         return categories;
     }
 
-    public Category update(UUID categoryNmuber, Category category){
-        Category existing = check(categoryNmuber);
+    public Category update(UUID categoryNumber, Category category){
+        Category existing = check(categoryNumber);
         if(existing.getName() != null){
             existing.setName(category.getName());
         }
@@ -78,7 +78,7 @@ public final class CategoryService {
 //    }
 
     public Category check(UUID number){
-        System.out.println("cat num " + number.toString());
+
         Optional<Category> category = categoryRepository.findByCategoryNumber(number);
         if(!category.isPresent()){
             throw new CategoryNumberNotFound("Category number not found");

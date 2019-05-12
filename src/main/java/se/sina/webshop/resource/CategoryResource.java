@@ -46,18 +46,19 @@ public final class CategoryResource {
 
     @GET
     public Response getCategories(@BeanParam Queries queries){
-        if(!queries.getName().equals("")){
-            List<CategoryWeb> categoryWebs = converter.convertCategoryList(categoryService.find(queries.getName(), "true"));
-            if(categoryWebs.size() > 0){
-                return Response.ok(categoryWebs).build();
-            }
-            return Response.noContent().build();
-        }
-        else if(queries.getActive().equals("false")){
-            return Response.ok(converter.convertCategoryList(categoryService.find("", "false"))).build();
-        }
-
-        return Response.ok(converter.convertCategoryList(categoryService.find("", ""))).build();
+//        if(!queries.getName().equals("")){
+//            List<CategoryWeb> categoryWebs = converter.convertCategoryList(categoryService.find(queries.getName(), "true"));
+//            if(categoryWebs.size() > 0){
+//                return Response.ok(categoryWebs).build();
+//            }
+//            return Response.noContent().build();
+//        }
+//        else if(queries.getActive().equals("false")){
+//            return Response.ok(converter.convertCategoryList(categoryService.find("", "false"))).build();
+//        }
+//
+//        return Response.ok(converter.convertCategoryList(categoryService.find("", ""))).build();
+        return Response.ok(converter.convertCategoryList(categoryService.find(queries.getName(), queries.getActive()))).build();
     }
 
     @GET

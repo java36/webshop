@@ -1,5 +1,7 @@
 package se.sina.webshop.model.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -13,7 +15,8 @@ public final class Model {
     @Column(nullable = false, unique = true)
     private UUID ModelNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
+    @Type(type = "uuid-char")
     private String name;
 
     @ManyToOne()
@@ -25,13 +28,13 @@ public final class Model {
     private Boolean active;
 
     @Column(nullable = false)
-    private double price;
+    private Double price;
 
     protected Model() {
 
     }
 
-    public Model(UUID ModelNumber, String name, Brand brand, double price) {
+    public Model(UUID ModelNumber, String name, Brand brand, Double price) {
         this.ModelNumber = ModelNumber;
         this.name = name;
         this.brand = brand;
@@ -39,7 +42,7 @@ public final class Model {
         modelStatus = ModelStatus.INSTORE;
     }
 
-    public Model(UUID modelNumber, String name, Brand brand, ModelStatus modelStatus, double price) {
+    public Model(UUID modelNumber, String name, Brand brand, ModelStatus modelStatus, Double price) {
         ModelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
@@ -91,11 +94,11 @@ public final class Model {
         this.active = active;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
