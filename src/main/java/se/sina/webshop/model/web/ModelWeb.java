@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public final class ModelWeb {
 
-    private UUID ModelNumber;
+    private UUID modelNumber;
 
     private String name;
 
@@ -26,11 +26,11 @@ public final class ModelWeb {
     }
 
     public ModelWeb(UUID modelNumber) {
-        ModelNumber = modelNumber;
+        this.modelNumber = modelNumber;
     }
 
     public ModelWeb(UUID modelNumber, String name, BrandWeb brand, ModelStatus modelStatus, Double price) {
-        ModelNumber = modelNumber;
+        this.modelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
         this.modelStatus = modelStatus;
@@ -38,7 +38,7 @@ public final class ModelWeb {
     }
 
     public UUID getModelNumber() {
-        return ModelNumber;
+        return modelNumber;
     }
 
     public String getName() {

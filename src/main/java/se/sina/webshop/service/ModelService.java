@@ -37,6 +37,7 @@ public final class ModelService {
         model.setModelNumber(UUID.randomUUID());
         model.setActive(true);
         model.setBrand(brandService.check(model.getBrand().getBrandNumber()));
+        model.setModelStatus(ModelStatus.INSTORE);
         return modelRepository.save(model);
     }
     public Model find(UUID modelNumber) {

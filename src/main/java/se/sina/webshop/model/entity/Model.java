@@ -13,10 +13,10 @@ public final class Model {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private UUID ModelNumber;
+    @Type(type = "uuid-char")
+    private UUID modelNumber;
 
     @Column(nullable = false, unique = true, updatable = false)
-    @Type(type = "uuid-char")
     private String name;
 
     @ManyToOne()
@@ -34,8 +34,8 @@ public final class Model {
 
     }
 
-    public Model(UUID ModelNumber, String name, Brand brand, Double price) {
-        this.ModelNumber = ModelNumber;
+    public Model(UUID modelNumber, String name, Brand brand, Double price) {
+        this.modelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
         this.price = price;
@@ -43,7 +43,7 @@ public final class Model {
     }
 
     public Model(UUID modelNumber, String name, Brand brand, ModelStatus modelStatus, Double price) {
-        ModelNumber = modelNumber;
+        this.modelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
         this.modelStatus = modelStatus;
@@ -55,7 +55,7 @@ public final class Model {
     }
 
     public UUID getModelNumber() {
-        return ModelNumber;
+        return modelNumber;
     }
 
     public ModelStatus getModelStatus() {
@@ -67,7 +67,7 @@ public final class Model {
     }
 
     public void setModelNumber(UUID modelNumber) {
-        this.ModelNumber = modelNumber;
+        this.modelNumber = modelNumber;
     }
 
     public String getName() {
@@ -104,6 +104,6 @@ public final class Model {
 
     @Override
     public String toString() {
-        return String.format("id: %s, Model Number: %s, name: %s, brand %s status", id, ModelNumber, name, brand, modelStatus);
+        return String.format("id: %s, Model Number: %s, name: %s, brand %s status", id, modelNumber, name, brand, modelStatus);
     }
 }
