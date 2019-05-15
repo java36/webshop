@@ -6,6 +6,7 @@ import se.sina.webshop.service.exception.BrandExceptions.InvalidBrandException;
 import se.sina.webshop.service.exception.ModelExceptions.InvalidModelException;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNameNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNumberNotFound;
+import se.sina.webshop.service.exception.ModelExceptions.ModelUndeletable;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -24,6 +25,9 @@ public class InvalidModelMapper implements ExceptionMapper<InvalidModelException
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
         if (exception instanceof ModelNumberNotFound){
+            return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof ModelUndeletable){
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
 

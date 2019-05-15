@@ -32,9 +32,10 @@ public final class ItemService {
     public Item createItem(Item item){
         item.setItemNumber(UUID.randomUUID());
         item.setModel(modelService.check(item.getModel().getModelNumber()));
-        checkModelStatus(item);
         item.setItemStatus(ItemStatus.STORED);
-        return itemRepository.save(item);
+        Item saved = itemRepository.save(item);
+        checkModelStatus(saved);
+        return saved;
     }
 
     public Item find(UUID itemNumber) {
@@ -48,18 +49,20 @@ public final class ItemService {
 
         if(!isBlank(model) && (!isBlank(itemStatus))){
             ItemStatus status = ItemStatus.valueOf(itemStatus);
-            List<Model> models = modelService.find(model, "", "");
-            if(models.size() > 0){
-                return itemRepository.findAllByModelAndItemStatus(models.get(0), status);
-            }
-            throw new ModelNameNotFound("Model name not found");
+//            List<Model> models = modelService.find(model, "", "");
+//            if(models.size() > 0){
+//                return itemRepository.findAllByModelAndItemStatus(models.get(0), status);
+//            }
+//            throw new ModelNameNotFound("Model name not found");
+            return itemRepository.findAllByModelNameAndItemStatus(model, status);
         }
         else if(!isBlank(model)){
-            List<Model> models = modelService.find(model, "", "");
-            if(models.size() > 0){
-                return itemRepository.findAllByModelAndItemStatus(models.get(0), ItemStatus.STORED);
-            }
-            throw new ModelNameNotFound("Model name not found");
+//            List<Model> models = modelService.find(model, "", "");
+//            if(models.size() > 0){
+//                return itemRepository.findAllByModelAndItemStatus(models.get(0), ItemStatus.STORED);
+//            }
+//            throw new ModelNameNotFound("Model name not found");
+            return itemRepository.findAllByModelNameAndItemStatus(model, ItemStatus.STORED);
 
         }
         else if(!isBlank(itemStatus)){
@@ -90,7 +93,8 @@ public final class ItemService {
 
     public void checkModelStatus(Item item){
         Model model = item.getModel();
-        List<Item> items = itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
+//        List<Item> items = itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
+        List<Item> items = itemRepository.findAllByModelNameAndItemStatus(model.getName(), ItemStatus.STORED);
         if(items.size() == 0){
             model.setModelStatus(ModelStatus.SOLDOUT);
             modelService.update(model.getModelNumber(), model, model.getBrand());

@@ -74,9 +74,10 @@ public final class CategoryResource {
         return Response.noContent().build();
     }
 
-//    @DELETE
-//    @Path("{number}")
-//    public Response deleteCategory(@PathParam("number") UUID number){
-//
-//    }
+    @DELETE
+    @Path("{number}")
+    public Response deleteCategory(@PathParam("number") UUID number){
+        categoryService.delete(number);
+        return Response.noContent().build();
+    }
 }

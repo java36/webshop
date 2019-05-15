@@ -1,7 +1,9 @@
 package se.sina.webshop.resource.mapper;
 
+import se.sina.webshop.model.entity.Category;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNameNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNumberNotFound;
+import se.sina.webshop.service.exception.CategoryExceptions.CategoryUndeletable;
 import se.sina.webshop.service.exception.CategoryExceptions.InvalidCategoryException;
 
 import javax.ws.rs.core.Response;
@@ -20,6 +22,9 @@ public class InvalidCategoryMapper implements ExceptionMapper<InvalidCategoryExc
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
         if (exception instanceof CategoryNameNotFound){
+            return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof CategoryUndeletable){
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
 

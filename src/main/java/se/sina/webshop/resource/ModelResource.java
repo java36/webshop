@@ -65,10 +65,10 @@ public final class ModelResource {
         return Response.noContent().build();
     }
 
-    //    @DELETE
-//    @Path("{number}")
-//    public Response deactivateModel(@PathParam("number") UUID modelNumber) {
-//        modelService.delete(modelNumber);
-//        return Response.noContent().build();
-//    }
+    @DELETE
+    @Path("{number}")
+    public Response deleteModel(@PathParam("number") UUID modelNumber) {
+        modelService.delete(modelNumber);
+        return Response.noContent().build();
+    }
 }

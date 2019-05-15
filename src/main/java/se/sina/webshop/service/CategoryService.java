@@ -1,10 +1,13 @@
 package se.sina.webshop.service;
 
 import org.springframework.stereotype.Service;
+import se.sina.webshop.model.entity.Brand;
 import se.sina.webshop.model.entity.Category;
+import se.sina.webshop.repository.BrandRepository;
 import se.sina.webshop.repository.CategoryRepository;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNameNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNumberNotFound;
+import se.sina.webshop.service.exception.CategoryExceptions.CategoryUndeletable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +21,11 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public final class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final BrandRepository brandRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, BrandRepository brandRepository) {
         this.categoryRepository = categoryRepository;
+        this.brandRepository = brandRepository;
     }
 
     public Category createCategory(Category category){
@@ -72,10 +77,15 @@ public final class CategoryService {
         }
         return categoryRepository.save(existing);
     }
-//    public Category deactivateCategory(UUID categoryNumber){
-//        Category result = check(categoryNumber);
-//
-//    }
+    public Category delete(UUID categoryNumber){
+        Category category = check(categoryNumber);
+        List<Brand> brands = brandRepository.findAllByActiveAndCategoryName(true, category.getName());
+        if(brands.size() == 0){
+            category.setActive(false);
+            return categoryRepository.save(category);
+        }
+        throw new CategoryUndeletable("unable to delete category");
+    }
 
     public Category check(UUID number){
 

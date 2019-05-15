@@ -1,16 +1,15 @@
 package se.sina.webshop.service;
 
 import org.springframework.stereotype.Service;
-import se.sina.webshop.model.entity.Brand;
-import se.sina.webshop.model.entity.Category;
-import se.sina.webshop.model.entity.Model;
-import se.sina.webshop.model.entity.ModelStatus;
+import se.sina.webshop.model.entity.*;
 import se.sina.webshop.repository.BrandRepository;
+import se.sina.webshop.repository.ItemRepository;
 import se.sina.webshop.repository.ModelRepository;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNameNotFound;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNumberNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNameNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNumberNotFound;
+import se.sina.webshop.service.exception.ModelExceptions.ModelUndeletable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +25,13 @@ public final class ModelService {
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
     private final BrandService brandService;
+    private final ItemRepository itemRepository;
 
-    public ModelService(ModelRepository modelRepository, BrandRepository brandRepository, BrandService brandService) {
+    public ModelService(ModelRepository modelRepository, BrandRepository brandRepository, BrandService brandService, ItemRepository itemRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
         this.brandService = brandService;
+        this.itemRepository = itemRepository;
     }
 
     public Model createModel(Model model){
@@ -108,8 +109,14 @@ public final class ModelService {
         return modelRepository.save(existing);
     }
 
-    public void delete(UUID modelNumber){
-
+    public Model delete(UUID modelNumber){
+        Model model = check(modelNumber);
+        List<Item> items = itemRepository.findAllByModelNameAndItemStatus(model.getName(), ItemStatus.STORED);
+        if(items.size() == 0){
+            model.setActive(false);
+            return modelRepository.save(model);
+        }
+        throw new ModelUndeletable("Unable to delete model");
     }
 
     public Model check(UUID number){

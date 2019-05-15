@@ -3,12 +3,17 @@ package se.sina.webshop.service;
 import org.springframework.stereotype.Service;
 import se.sina.webshop.model.entity.Brand;
 import se.sina.webshop.model.entity.Category;
+import se.sina.webshop.model.entity.Item;
+import se.sina.webshop.model.entity.Model;
 import se.sina.webshop.repository.BrandRepository;
 import se.sina.webshop.repository.CategoryRepository;
+import se.sina.webshop.repository.ModelRepository;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNameNotFound;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNumberNotFound;
+import se.sina.webshop.service.exception.BrandExceptions.BrandUndeletable;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNameNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNumberNotFound;
+import se.sina.webshop.service.exception.ModelExceptions.ModelUndeletable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +28,12 @@ public final class BrandService {
 
     private final BrandRepository brandRepository;
     private final CategoryService categoryService;
+    private final ModelRepository modelRepository;
 
-    public BrandService(BrandRepository brandRepository, CategoryService categoryService) {
+    public BrandService(BrandRepository brandRepository, CategoryService categoryService, ModelRepository modelRepository) {
         this.brandRepository = brandRepository;
         this.categoryService = categoryService;
+        this.modelRepository = modelRepository;
     }
 
     public Brand createBrand(Brand brand){
@@ -98,8 +105,14 @@ public final class BrandService {
         return brandRepository.save(existing);
     }
 
-    public void delete(UUID brandNumber){
-
+    public Brand delete(UUID brandNumber){
+        Brand brand = check(brandNumber);
+        List<Model> models = modelRepository.findAllByActiveAndBrandName(true, brand.getName());
+        if(models.size() == 0){
+            brand.setActive(false);
+            return brandRepository.save(brand);
+        }
+        throw new BrandUndeletable("Unable to delete brand");
     }
 
     public Brand check(UUID number){

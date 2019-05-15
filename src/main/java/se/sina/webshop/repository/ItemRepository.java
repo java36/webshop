@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Optional<Item> findByItemNumber(UUID number);
     List<Item> findAllByItemStatus(ItemStatus status);
-    List<Item> findAllByModelAndItemStatus(Model model, ItemStatus itemStatus);
+    List<Item> findAllByModelNameAndItemStatus(String modelName, ItemStatus itemStatus);
 }

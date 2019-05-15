@@ -65,11 +65,11 @@ public final class BrandResource {
         return Response.noContent().build();
     }
 
-//    @DELETE
-//    @Path("{number}")
-//    public Response deactivateBrand(@PathParam("number") UUID brandNumber) {
-//        brandService.delete(brandNumber);
-//        return Response.noContent().build();
-//    }
+    @DELETE
+    @Path("{number}")
+    public Response deleteBrand(@PathParam("number") UUID brandNumber) {
+        brandService.delete(brandNumber);
+        return Response.noContent().build();
+    }
 
 }
