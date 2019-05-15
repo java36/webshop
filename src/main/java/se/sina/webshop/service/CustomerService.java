@@ -7,6 +7,8 @@ import se.sina.webshop.repository.CustomerRepository;
 import se.sina.webshop.service.exception.CustomerExceptions.CustomerEmailNotFound;
 import se.sina.webshop.service.exception.CustomerExceptions.CustomerNumberNotFound;
 import se.sina.webshop.service.exception.CustomerExceptions.EmailAlreadyExists;
+import se.sina.webshop.service.exception.FormatExceptions.EmailFormatException;
+import se.sina.webshop.service.exception.FormatExceptions.NameFormatException;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNameNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNumberNotFound;
 
@@ -27,6 +29,9 @@ public final class CustomerService {
     }
 
     public Customer createCustomer(Customer customer){
+        checkNameFormat(customer.getFirstname());
+        checkNameFormat(customer.getLastname());
+        checkEmailFormat(customer.getEmail());
         validate(customer.getEmail());
         customer.setCustomerNumber(UUID.randomUUID());
         customer.setActive(true);
@@ -67,9 +72,11 @@ public final class CustomerService {
     public Customer update(UUID customerNumber, Customer customer){
         Customer existing = check(customerNumber);
        if(customer.getFirstname() != null){
+           checkNameFormat(customer.getFirstname());
            existing.setFirstname(customer.getFirstname());
        }
         if(customer.getLastname() != null){
+            checkNameFormat(customer.getLastname());
             existing.setLastname(customer.getLastname());
         }
         if(customer.getSocialSecurityNumber() != null){
@@ -79,8 +86,11 @@ public final class CustomerService {
             existing.setAddress(customer.getAddress());
         }
         if(customer.getEmail() != null){
-            validate(customer.getEmail());
-            existing.setEmail(customer.getEmail());
+            checkEmailFormat(customer.getEmail());
+            if(!customer.getEmail().equals(existing.getEmail())){
+                validate(customer.getEmail());
+                existing.setEmail(customer.getEmail());
+            }
         }
         if(customer.getActive() != null){
             existing.setActive(customer.getActive());
@@ -120,6 +130,17 @@ public final class CustomerService {
         Optional<Customer> result = customerRepository.findByEmail(email);
         if(result.isPresent()){
             throw new EmailAlreadyExists("The email address is already taken");
+        }
+    }
+    public void checkEmailFormat(String email) {
+        if (!email.matches("[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z0-9]+")) {
+            throw new EmailFormatException("incorrect format for entered email");
+        }
+    }
+
+    public void checkNameFormat(String name) {
+        if (!name.matches("[A-Za-zÄÖÅäöå]+")) {
+            throw new NameFormatException("Incorrect format for name");
         }
     }
 
