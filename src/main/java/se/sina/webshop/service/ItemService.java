@@ -32,6 +32,7 @@ public final class ItemService {
     public Item createItem(Item item){
         item.setItemNumber(UUID.randomUUID());
         item.setModel(modelService.check(item.getModel().getModelNumber()));
+        checkModelStatus(item);
         item.setItemStatus(ItemStatus.STORED);
         return itemRepository.save(item);
     }
@@ -92,6 +93,10 @@ public final class ItemService {
         List<Item> items = itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
         if(items.size() == 0){
             model.setModelStatus(ModelStatus.SOLDOUT);
+            modelService.update(model.getModelNumber(), model, model.getBrand());
+        }
+        else{
+            model.setModelStatus(ModelStatus.INSTORE);
             modelService.update(model.getModelNumber(), model, model.getBrand());
         }
     }
