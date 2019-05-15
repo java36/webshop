@@ -63,4 +63,11 @@ public final class ItemResource {
         itemService.update(number, converter.convertFrom(itemWeb), itemWeb.getModel() == null ?  model : converter.convertFrom(itemWeb.getModel()));
         return Response.noContent().build();
     }
+
+    @DELETE
+    @Path("{number}")
+    public Response deleteItem(@PathParam("number") UUID itemNumber){
+        itemService.delete(itemNumber);
+        return Response.noContent().build();
+    }
 }

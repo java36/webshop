@@ -39,39 +39,27 @@ public final class ItemService {
     public Item find(UUID itemNumber) {
         return check(itemNumber);
     }
+
     public List<Item> find(String model, String itemStatus){
         List<Item> items = new ArrayList<>();
         model = format(model);
         itemStatus = format(itemStatus).toUpperCase();
 
-//        if (isBlank(itemStatus) || itemStatus.equals("stored")) {
-//            if (!isBlank(model)) {
-//                return itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
-//            } else {
-//                return itemRepository.findAllByItemStatus(ItemStatus.STORED);
-//            }
-//        } else if (itemStatus.equals("terminated") || itemStatus.equals("sold")) {
-//            if (!isBlank(model)) {
-//                items.addAll(itemRepository.findAllByModelAndItemStatus(model,))
-//                if (!category.getActive()) {
-//                    categories.add(category);
-//                }
-//                return categories;
-//            } else {
-//                return categoryRepository.findAllByActiveFalse();
-//            }
-//        } else if (isAllBlank(name, active)) {
-//            return categoryRepository.findAll();
-//        }
-//
-//        return categories;
-
         if(!isBlank(model) && (!isBlank(itemStatus))){
             ItemStatus status = ItemStatus.valueOf(itemStatus);
-            return itemRepository.findAllByModelAndItemStatus(model, status);
+            List<Model> models = modelService.find(model, "", "");
+            if(models.size() > 0){
+                return itemRepository.findAllByModelAndItemStatus(models.get(0), status);
+            }
+            throw new ModelNameNotFound("Model name not found");
         }
         else if(!isBlank(model)){
-            return itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
+            List<Model> models = modelService.find(model, "", "");
+            if(models.size() > 0){
+                return itemRepository.findAllByModelAndItemStatus(models.get(0), ItemStatus.STORED);
+            }
+            throw new ModelNameNotFound("Model name not found");
+
         }
         else if(!isBlank(itemStatus)){
             ItemStatus status = ItemStatus.valueOf(itemStatus);
@@ -91,8 +79,21 @@ public final class ItemService {
         return itemRepository.save(existing);
     }
 
-    public void delete(UUID modelNumber){
+    public Item delete(UUID modelNumber){
+        Item result = check(modelNumber);
+        result.setItemStatus(ItemStatus.DELETED);
+        Item item = itemRepository.save(result);
+        checkModelStatus(item);
+        return item;
+    }
 
+    public void checkModelStatus(Item item){
+        Model model = item.getModel();
+        List<Item> items = itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
+        if(items.size() == 0){
+            model.setModelStatus(ModelStatus.SOLDOUT);
+            modelService.update(model.getModelNumber(), model, model.getBrand());
+        }
     }
 
     public Item check(UUID number){

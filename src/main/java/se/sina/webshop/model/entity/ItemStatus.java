@@ -3,7 +3,7 @@ package se.sina.webshop.model.entity;
 public enum ItemStatus {
 
     STORED("stored"),
-    TERMINATED("terminated"),
+    DELETED("deleted"),
     SOLD("sold");
 
     private String name;
