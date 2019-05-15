@@ -28,9 +28,9 @@ public final class Queries {
     @DefaultValue("")
     private UUID itemNumber;
 
-    @QueryParam("customerEmail")
+    @QueryParam("email")
     @DefaultValue("")
-    private String customerEmail;
+    private String email;
     @QueryParam("category")
     @DefaultValue("")
     private String category;
@@ -76,8 +76,8 @@ public final class Queries {
         return itemNumber;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
+    public String getEmail() {
+        return email;
     }
 
     public String getCategory() {

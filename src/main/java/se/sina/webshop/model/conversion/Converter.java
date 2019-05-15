@@ -55,7 +55,7 @@ public final class Converter {
     }
 
     public CustomerWeb convertFrom(Customer customer){
-        return new CustomerWeb(customer.getCustomerNumber(), customer.getFirstname(), customer.getLastname(), customer.getSocialSecurityNumber(), customer.getEmail());
+        return new CustomerWeb(customer.getCustomerNumber(), customer.getFirstname(), customer.getLastname(), customer.getAddress(), customer.getEmail());
     }
 
     public Order convertFrom(OrderWeb orderWeb){

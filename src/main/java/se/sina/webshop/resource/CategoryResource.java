@@ -23,8 +23,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 public final class CategoryResource {
 
-    private CategoryService categoryService;
-    private Converter converter;
+    private final CategoryService categoryService;
+    private final Converter converter;
 
     @Context
     private UriInfo uriInfo;

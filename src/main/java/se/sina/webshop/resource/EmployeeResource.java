@@ -22,8 +22,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 public final class EmployeeResource {
 
-    private EmployeeService employeeService;
-    private Converter converter;
+    private final EmployeeService employeeService;
+    private final Converter converter;
 
     @Context
     private UriInfo uriInfo;

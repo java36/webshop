@@ -25,8 +25,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 public final class ModelResource {
 
-    private ModelService modelService;
-    private Converter converter;
+    private final ModelService modelService;
+    private final Converter converter;
 
     @Context
     private UriInfo uriInfo;

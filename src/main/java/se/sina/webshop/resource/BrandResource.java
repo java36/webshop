@@ -25,8 +25,8 @@ import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 public final class BrandResource {
-    private BrandService brandService;
-    private Converter converter;
+    private final BrandService brandService;
+    private final Converter converter;
 
     @Context
     private UriInfo uriInfo;

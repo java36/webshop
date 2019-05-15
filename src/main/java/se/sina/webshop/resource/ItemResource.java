@@ -24,8 +24,9 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 public final class ItemResource {
-    private ItemService itemService;
-    private Converter converter;
+
+    private final ItemService itemService;
+    private final Converter converter;
 
     @Context
     private UriInfo uriInfo;

@@ -1,10 +1,11 @@
 package se.sina.webshop.resource.mapper;
 
-import se.sina.webshop.model.entity.Category;
+import se.sina.webshop.model.entity.Customer;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNameNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNumberNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryUndeletable;
 import se.sina.webshop.service.exception.CategoryExceptions.InvalidCategoryException;
+import se.sina.webshop.service.exception.CustomerExceptions.*;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -15,17 +16,19 @@ import static javax.ws.rs.core.Response.Status.NOT_ACCEPTABLE;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Provider
-public class InvalidCategoryMapper implements ExceptionMapper<InvalidCategoryException>{
-
+public class InvalidCustomerMapper implements ExceptionMapper<InvalidCustomerException> {
     @Override
-    public Response toResponse(InvalidCategoryException exception) {
-        if (exception instanceof CategoryNumberNotFound){
+    public Response toResponse(InvalidCustomerException exception) {
+        if (exception instanceof CustomerNumberNotFound){
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
-        if (exception instanceof CategoryNameNotFound){
+        if (exception instanceof CustomerNameNotFound){
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
-        if (exception instanceof CategoryUndeletable){
+        if (exception instanceof CustomerNameNotFound){
+            return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof EmailAlreadyExists){
             return Response.status(NOT_ACCEPTABLE).entity(singletonMap("Error", exception.getMessage())).build();
         }
 
