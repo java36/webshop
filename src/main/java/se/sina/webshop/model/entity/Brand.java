@@ -16,7 +16,7 @@ public final class Brand {
     @Type(type = "uuid-char")
     private UUID brandNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne()

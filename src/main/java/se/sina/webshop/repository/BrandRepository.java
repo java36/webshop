@@ -13,4 +13,5 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     List<Brand> findAllByActiveAndCategoryName(Boolean active, String categoryName);
     List<Brand> findAllByActiveTrue();
     List<Brand> findAllByActiveFalse();
+    Optional<Brand> findByNameAndCategoryName(String brandName, String categoryName);
 }

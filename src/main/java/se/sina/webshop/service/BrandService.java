@@ -8,6 +8,7 @@ import se.sina.webshop.model.entity.Model;
 import se.sina.webshop.repository.BrandRepository;
 import se.sina.webshop.repository.CategoryRepository;
 import se.sina.webshop.repository.ModelRepository;
+import se.sina.webshop.service.exception.BrandExceptions.BrandNameAlreadyExists;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNameNotFound;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNumberNotFound;
 import se.sina.webshop.service.exception.BrandExceptions.BrandUndeletable;
@@ -37,9 +38,11 @@ public final class BrandService {
     }
 
     public Brand createBrand(Brand brand){
+        Category category = categoryService.check(brand.getCategory().getCategoryNumber());
+        checkDoubleNames(brand.getName(), category.getName());
         brand.setBrandNumber(UUID.randomUUID());
         brand.setActive(true);
-        brand.setCategory(categoryService.check(brand.getCategory().getCategoryNumber()));
+        brand.setCategory(category);
         return brandRepository.save(brand);
     }
 
@@ -95,12 +98,14 @@ public final class BrandService {
     }
 
     public Brand update(UUID brandNumber, Brand brand, Category category){
+        Category resultCategory = categoryService.check(category.getCategoryNumber());
         Brand existing = check(brandNumber);
         if(brand.getName() != null){
+            checkDoubleNames(brand.getName(), resultCategory.getName());
             existing.setName(brand.getName());
         }
         if(category.getCategoryNumber() != null){
-            brand.setCategory(categoryService.check(category.getCategoryNumber()));
+            brand.setCategory(category);
         }
         return brandRepository.save(existing);
     }
@@ -129,6 +134,13 @@ public final class BrandService {
             throw new BrandNameNotFound("Brand name not found");
         }
         return result.get();
+    }
+
+    public void checkDoubleNames(String brandName, String categoryName){
+        Optional<Brand> result = brandRepository.findByNameAndCategoryName(brandName, categoryName);
+        if(result.isPresent()){
+            throw new BrandNameAlreadyExists("Brand name already exists");
+        }
     }
     public String format(String string){
         return string.trim().toLowerCase();

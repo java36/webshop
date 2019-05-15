@@ -16,7 +16,7 @@ public final class Model {
     @Type(type = "uuid-char")
     private UUID modelNumber;
 
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne()

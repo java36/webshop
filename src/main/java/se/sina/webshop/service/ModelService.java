@@ -7,6 +7,7 @@ import se.sina.webshop.repository.ItemRepository;
 import se.sina.webshop.repository.ModelRepository;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNameNotFound;
 import se.sina.webshop.service.exception.BrandExceptions.BrandNumberNotFound;
+import se.sina.webshop.service.exception.ModelExceptions.ModelNameAlreadyExists;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNameNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNumberNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelUndeletable;
@@ -35,9 +36,11 @@ public final class ModelService {
     }
 
     public Model createModel(Model model){
+        Brand brand = brandService.check(model.getBrand().getBrandNumber());
+        checkDoubleNames(model.getName(), brand.getName());
         model.setModelNumber(UUID.randomUUID());
         model.setActive(true);
-        model.setBrand(brandService.check(model.getBrand().getBrandNumber()));
+        model.setBrand(brand);
         model.setModelStatus(ModelStatus.INSTORE);
         return modelRepository.save(model);
     }
@@ -94,7 +97,9 @@ public final class ModelService {
 
     public Model update(UUID modelNumber, Model model, Brand brand){
         Model existing = check(modelNumber);
+        Brand resultingBrand = brandService.check(existing.getBrand().getBrandNumber());
         if(model.getName() != null){
+            checkDoubleNames(model.getName(), brand.getName());
             existing.setName(model.getName());
         }
         if(model.getPrice() != null){
@@ -133,6 +138,13 @@ public final class ModelService {
             throw new ModelNameNotFound("Model name not found");
         }
         return result.get();
+    }
+
+    public void checkDoubleNames(String modelName, String brandName){
+        Optional<Model> result = modelRepository.findByNameAndBrandName(modelName, brandName);
+        if(result.isPresent()){
+            throw new ModelNameAlreadyExists("Model name already exists");
+        }
     }
     public String format(String string){
         return string.trim().toLowerCase();

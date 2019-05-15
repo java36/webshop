@@ -13,4 +13,5 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
     List<Model> findAllByActiveAndBrandName(Boolean active, String brandName);
     List<Model> findAllByActiveTrue();
     List<Model> findAllByActiveFalse();
+    Optional<Model> findByNameAndBrandName(String modelName, String brandName);
 }

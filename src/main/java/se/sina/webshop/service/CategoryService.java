@@ -5,6 +5,7 @@ import se.sina.webshop.model.entity.Brand;
 import se.sina.webshop.model.entity.Category;
 import se.sina.webshop.repository.BrandRepository;
 import se.sina.webshop.repository.CategoryRepository;
+import se.sina.webshop.service.exception.CategoryExceptions.CategoryNameAlreadyExists;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNameNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryNumberNotFound;
 import se.sina.webshop.service.exception.CategoryExceptions.CategoryUndeletable;
@@ -29,6 +30,7 @@ public final class CategoryService {
     }
 
     public Category createCategory(Category category){
+        checkDoubleNames(category.getName());
         category.setCategoryNumber(UUID.randomUUID());
         category.setActive(true);
         return categoryRepository.save(category);
@@ -72,7 +74,8 @@ public final class CategoryService {
 
     public Category update(UUID categoryNumber, Category category){
         Category existing = check(categoryNumber);
-        if(existing.getName() != null){
+        if(category.getName() != null){
+            checkDoubleNames(category.getName());
             existing.setName(category.getName());
         }
         return categoryRepository.save(existing);
@@ -101,6 +104,12 @@ public final class CategoryService {
             throw new CategoryNameNotFound("Category name not found");
         }
         return result.get();
+    }
+    public void checkDoubleNames(String categoryName){
+        Optional<Category> result = categoryRepository.findByName(categoryName);
+        if(result.isPresent()){
+            throw new CategoryNameAlreadyExists("Category name already exists");
+        }
     }
     public String format(String string){
         return string.trim().toLowerCase();
