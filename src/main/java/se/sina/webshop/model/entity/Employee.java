@@ -40,7 +40,6 @@ public final class Employee {
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        active = true;
     }
 
     public UUID getEmployeeNumber() {

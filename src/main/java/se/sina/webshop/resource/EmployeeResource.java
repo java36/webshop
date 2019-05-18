@@ -44,8 +44,8 @@ public final class EmployeeResource {
                 .build();
     }
     @GET
-    public Response getEmployees(){
-        return Response.ok(converter.convertEmployeeList(employeeService.getEmployees())).build();
+    public Response getEmployees(@BeanParam Queries queries){
+        return Response.ok(converter.convertEmployeeList(employeeService.find(queries.getUsername(), queries.getActive()))).build();
     }
     @GET
     @Path("{number}")
@@ -53,4 +53,17 @@ public final class EmployeeResource {
         return Response.ok(converter.convertFrom(employeeService.find(number))).build();
     }
 
+    @PUT
+    @Path("{number}")
+    public Response updateEmployee(@PathParam("number") UUID number, Employee employee){
+        employeeService.update(number, employee);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Path("{number}")
+    public Response deleteEmployee(@PathParam("number") UUID number){
+        employeeService.delete(number);
+        return Response.noContent().build();
+    }
 }

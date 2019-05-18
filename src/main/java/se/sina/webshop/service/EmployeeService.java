@@ -5,9 +5,12 @@ import se.sina.webshop.model.entity.Employee;
 import se.sina.webshop.repository.EmployeeRepository;
 import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeUsernameError;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public final class EmployeeService {
@@ -28,8 +31,48 @@ public final class EmployeeService {
     public Employee find(UUID employeeNumber){
         return check(employeeNumber);
     }
-    public List<Employee> getEmployees(){
+    public List<Employee> find(String username, String active){
+        username = format(username);
+        active = format(active);
+        List<Employee> employees = new ArrayList<>();
+
+        if(!isBlank(username)){
+            Optional<Employee> result = employeeRepository.findByUsername(username);
+            if(result.isPresent()){
+                employees.add(result.get());
+            }
+            return employees;
+        }
+        else if(!isBlank(active)){
+            return employeeRepository.findAllByActive(Boolean.valueOf(active));
+        }
         return employeeRepository.findAll();
+    }
+
+    public Employee update(UUID employeeNumber, Employee employee){
+        Employee existing = check(employeeNumber);
+        if(employee.getUsername() != null){
+            if(!employee.getUsername().equals(existing.getUsername())){
+                check(employee.getUsername());
+            }
+            existing.setUsername(employee.getUsername());
+        }
+        if(employee.getPassword() != null){
+            existing.setPassword(employee.getPassword());
+        }
+        if(employee.getFirstname() != null){
+            existing.setFirstname(employee.getFirstname());
+        }
+        if(employee.getLastname() != null){
+            existing.setLastname(employee.getLastname());
+        }
+        return employeeRepository.save(existing);
+    }
+
+    public void delete(UUID employeeNumber){
+        Employee employee = check(employeeNumber);
+        employee.setActive(false);
+        employeeRepository.save(employee);
     }
 
 
@@ -47,4 +90,8 @@ public final class EmployeeService {
         }
         return employee.get();
     }
+    public String format(String string){
+        return string.trim().toLowerCase();
+    }
+
 }
