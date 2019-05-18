@@ -75,9 +75,9 @@ public final class OrderResource {
         return Response.ok(converter.convertFrom(orderService.findOrderItemByNumber(orderItemNumber))).build();
     }
     @GET
-    @Path("orderItems")
-    public Response getOrderItems(@BeanParam Queries queries) {
-        List<OrderItemWeb> orderItemWebs = converter.convertOrderItemList(orderService.findOrderItems(queries.getCustomerEmail(), queries.getOrderNumber(), queries.getActive()));
+    @Path("{orderNumber}/orderItems")
+    public Response getOrderItems(@PathParam("orderNumber") UUID orderNumber, @BeanParam Queries queries) {
+        List<OrderItemWeb> orderItemWebs = converter.convertOrderItemList(orderService.findOrderItems(orderNumber, queries.getCustomerEmail(), queries.getActive()));
         return Response.ok(orderItemWebs).build();
     }
     @PUT

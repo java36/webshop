@@ -89,7 +89,7 @@ public final class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<OrderItem> findOrderItems(String customerEmail, UUID orderNumber, String active){
+    public List<OrderItem> findOrderItems(UUID orderNumber, String customerEmail, String active){
         active = format(active);
         customerEmail = format(customerEmail);
         List<OrderItem> orderItems = new ArrayList<>();
@@ -105,15 +105,15 @@ public final class OrderService {
             for(Order o : orders){
                 orderItems.addAll(orderItemRepository.findAllByOrderOrderNumber(o.getOrderNumber()));
             }
+            return orderItems;
         }
         else if(orderNumber != null){
-            orderItems.addAll(orderItemRepository.findAllByOrderOrderNumber(orderNumber));
+            return orderItemRepository.findAllByOrderOrderNumber(orderNumber);
         }
         else if(!isBlank(active)){
-            orderItems.addAll(orderItemRepository.findAllByShipped(!Boolean.valueOf(active)));
+            return orderItemRepository.findAllByShipped(!Boolean.valueOf(active));
         }
-            orderItems.addAll(orderItemRepository.findAll());
-        return orderItems;
+            return orderItemRepository.findAll();
     }
 
 //    public List<OrderItem> findCustomerOrderItems(String customerEmail, String active){
@@ -160,19 +160,23 @@ public final class OrderService {
     }
 
     public void deleteOrderItem(UUID orderItemNumber){
-        System.out.println("oinum " + orderItemNumber.toString());
         OrderItem orderItem = checkOrderItem(orderItemNumber);
-        System.out.println("o item: " + orderItem.toString());
         orderItem.setShipped(true);
         orderItem.setShippingDate(Date.valueOf(LocalDate.now()));
-        System.out.println("new o i " + orderItem.toString());
         orderItemRepository.save(orderItem);
+        checkOrderStatus(orderItem.getOrder().getOrderNumber());
     }
 
     public void deleteOrder(UUID orderNumber){
         Order order = checkOrder(orderNumber);
         order.setActive(false);
         orderRepository.save(order);
+    }
+    public void checkOrderStatus(UUID orderNumber){
+        List<OrderItem> orderItems = orderItemRepository.findAllByOrderOrderNumberAndShipped(orderNumber, false);
+        if(orderItems.size() == 0){
+            deleteOrder(orderNumber);
+        }
     }
 
     public Order checkOrder(UUID orderNumber){
