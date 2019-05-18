@@ -17,7 +17,7 @@ public final class OrderItem {
     @Type(type = "uuid-char")
     private UUID orderItemNumber;
 
-    @ManyToOne
+    @OneToOne
     private Item item;
 
     @ManyToOne
@@ -35,6 +35,14 @@ public final class OrderItem {
         this.item = item;
         this.order = order;
         shipped = false;
+    }
+
+    public OrderItem(UUID orderItemNumber, Item item, Order order, boolean shipped, Date shippingDate) {
+        this.orderItemNumber = orderItemNumber;
+        this.item = item;
+        this.order = order;
+        this.shipped = shipped;
+        this.shippingDate = shippingDate;
     }
 
     public Long getId() {

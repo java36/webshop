@@ -48,9 +48,9 @@ public final class OrderResource {
     }
 
     @POST
-    @Path("orderItems")
-    public Response createOrderItem(OrderItemWeb orderItemWeb){
-        OrderItem orderItem = orderService.createOrderItem(converter.convertFrom(orderItemWeb));
+    @Path("{orderNumber}")
+    public Response createOrderItem(@PathParam("orderNumber") UUID orderNumber, OrderItemWeb orderItemWeb){
+        OrderItem orderItem = orderService.createOrderItem(orderNumber, orderItemWeb.getItem().getItemNumber());
         return Response.created(URI.create(uriInfo
                 .getAbsolutePathBuilder()
                 .path(orderItem.getOrderItemNumber().toString())
@@ -74,16 +74,12 @@ public final class OrderResource {
     public Response getOrderItemByNumber(@PathParam("number") UUID orderItemNumber) {
         return Response.ok(converter.convertFrom(orderService.findOrderItemByNumber(orderItemNumber))).build();
     }
-//    @GET
-//    @Path("orderItems")
-//    public Response getOrderItems(@BeanParam Queries queries) {
-//        if(!queries.getCustomerEmail().equals("")){
-//            List<OrderItemWeb> orderItemWebsWebs = converter.convertOrderItemList(orderService.findCustomerOrderItems(queries.getCustomerEmail(), queries.getActive()));
-//            return Response.ok(orderItemWebsWebs).build();
-//        }
-//        List<OrderItemWeb> orderItemWebs = converter.convertOrderItemList(orderService.findOrderItems(queries.getActive()));
-//        return Response.ok(orderItemWebs).build();
-//    }
+    @GET
+    @Path("orderItems")
+    public Response getOrderItems(@BeanParam Queries queries) {
+        List<OrderItemWeb> orderItemWebs = converter.convertOrderItemList(orderService.findOrderItems(queries.getCustomerEmail(), queries.getOrderNumber(), queries.getActive()));
+        return Response.ok(orderItemWebs).build();
+    }
     @PUT
     @Path("{number}")
     public Response updateOrder(@PathParam("number") UUID number, OrderWeb orderWeb) {

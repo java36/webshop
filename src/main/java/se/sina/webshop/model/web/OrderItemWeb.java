@@ -31,6 +31,14 @@ public final class OrderItemWeb {
         this.order = order;
     }
 
+    public OrderItemWeb(UUID orderItemNumber, ItemWeb item, OrderWeb order, boolean shipped, Date shippingDate) {
+        this.orderItemNumber = orderItemNumber;
+        this.item = item;
+        this.order = order;
+        this.shipped = shipped;
+        this.shippingDate = shippingDate;
+    }
+
     public UUID getOrderItemNumber() {
         return orderItemNumber;
     }
@@ -45,5 +53,9 @@ public final class OrderItemWeb {
 
     public boolean isShipped() {
         return shipped;
+    }
+
+    public Date getShippingDate() {
+        return shippingDate;
     }
 }

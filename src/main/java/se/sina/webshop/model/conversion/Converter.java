@@ -67,11 +67,11 @@ public final class Converter {
     }
 
     public OrderItem convertFrom(OrderItemWeb orderItemWeb){
-        return new OrderItem(orderItemWeb.getOrderItemNumber(), convertFrom(orderItemWeb.getItem()), convertFrom(orderItemWeb.getOrder()));
+        return new OrderItem(orderItemWeb.getOrderItemNumber(), convertFrom(orderItemWeb.getItem()), convertFrom(orderItemWeb.getOrder()), orderItemWeb.isShipped(), orderItemWeb.getShippingDate());
     }
 
     public OrderItemWeb convertFrom(OrderItem orderItem){
-        return new OrderItemWeb(orderItem.getOrderItemNumber(), convertFrom(orderItem.getItem()), convertFrom(orderItem.getOrder()));
+        return new OrderItemWeb(orderItem.getOrderItemNumber(), convertFrom(orderItem.getItem()), convertFrom(orderItem.getOrder()), orderItem.isShipped(), orderItem.getShippingDate());
     }
 
     public List<EmployeeWeb> convertEmployeeList(List<Employee> employees){

@@ -50,10 +50,10 @@ public final class OrderService {
         return orderRepository.save(order);
     }
 
-    public OrderItem createOrderItem(OrderItem orderItem){
-        Item item = itemService.checkItemStatus(orderItem.getItem().getItemNumber());
-        Order order = checkOrder(orderItem.getOrder().getOrderNumber());
-        orderItem.setOrderItemNumber(UUID.randomUUID());
+    public OrderItem createOrderItem(UUID orderNumber, UUID itemNumber){
+        Item item = itemService.checkItemStatus(itemNumber);
+        Order order = checkOrder(orderNumber);
+        OrderItem orderItem = new OrderItem(UUID.randomUUID(), item, order);
         orderItem.setShipped(false);
         OrderItem saved = orderItemRepository.save(orderItem);
         item.setItemStatus(ItemStatus.SOLD);
@@ -89,12 +89,31 @@ public final class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<OrderItem> findOrderItems(String active){
+    public List<OrderItem> findOrderItems(String customerEmail, UUID orderNumber, String active){
         active = format(active);
-        if(!isBlank(active)){
-            return orderItemRepository.findAllByShipped(Boolean.valueOf(active));
+        customerEmail = format(customerEmail);
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        if(!isBlank(customerEmail)){
+            List<Order> orders = orderRepository.findAllByCustomerEmail(customerEmail);
+            if(!isBlank(active)){
+                Boolean shipped = !Boolean.valueOf(active);
+                for(Order o : orders){
+                    orderItems.addAll(orderItemRepository.findAllByOrderOrderNumberAndShipped(o.getOrderNumber(), shipped));
+                }
+            }
+            for(Order o : orders){
+                orderItems.addAll(orderItemRepository.findAllByOrderOrderNumber(o.getOrderNumber()));
+            }
         }
-            return orderItemRepository.findAll();
+        else if(orderNumber != null){
+            orderItems.addAll(orderItemRepository.findAllByOrderOrderNumber(orderNumber));
+        }
+        else if(!isBlank(active)){
+            orderItems.addAll(orderItemRepository.findAllByShipped(!Boolean.valueOf(active)));
+        }
+            orderItems.addAll(orderItemRepository.findAll());
+        return orderItems;
     }
 
 //    public List<OrderItem> findCustomerOrderItems(String customerEmail, String active){
@@ -141,9 +160,12 @@ public final class OrderService {
     }
 
     public void deleteOrderItem(UUID orderItemNumber){
+        System.out.println("oinum " + orderItemNumber.toString());
         OrderItem orderItem = checkOrderItem(orderItemNumber);
+        System.out.println("o item: " + orderItem.toString());
         orderItem.setShipped(true);
         orderItem.setShippingDate(Date.valueOf(LocalDate.now()));
+        System.out.println("new o i " + orderItem.toString());
         orderItemRepository.save(orderItem);
     }
 
