@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import se.sina.webshop.model.entity.*;
 import se.sina.webshop.repository.ItemRepository;
 import se.sina.webshop.repository.ModelRepository;
+import se.sina.webshop.service.exception.ItemExceptions.ItemNotInStore;
 import se.sina.webshop.service.exception.ItemExceptions.ItemNumberNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNameNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNumberNotFound;
@@ -112,6 +113,18 @@ public final class ItemService {
             throw new ItemNumberNotFound("Item number not found");
         }
         return result.get();
+    }
+
+    public Item checkItemStatus(UUID number){
+        Optional<Item> result = itemRepository.findByItemNumber(number);
+        if(!result.isPresent()){
+            throw new ItemNumberNotFound("Item number not found");
+        }
+        Item item = result.get();
+        if(!item.getItemStatus().equals(ItemStatus.STORED) ){
+            throw new ItemNotInStore("Item not in store");
+        }
+        return item;
     }
     public String format(String string){
         return string.trim().toLowerCase();

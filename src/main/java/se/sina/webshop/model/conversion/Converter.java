@@ -59,11 +59,11 @@ public final class Converter {
     }
 
     public Order convertFrom(OrderWeb orderWeb){
-        return new Order(orderWeb.getOrderNumber(), orderWeb.getOrderDate(), convertFrom(orderWeb.getCustomer()));
+        return new Order(orderWeb.getOrderNumber(), orderWeb.getOrderDate(), orderWeb.getCustomer() == null ? null : convertFrom(orderWeb.getCustomer()), orderWeb.getTotal());
     }
 
     public OrderWeb convertFrom(Order order){
-        return new OrderWeb(order.getOrderNumber(), order.getOrderDate(), convertFrom(order.getCustomer()));
+        return new OrderWeb(order.getOrderNumber(), order.getOrderDate(), convertFrom(order.getCustomer()), order.getTotal());
     }
 
     public OrderItem convertFrom(OrderItemWeb orderItemWeb){

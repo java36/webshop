@@ -11,7 +11,7 @@ public final class OrderWeb {
 
     private CustomerWeb customer;
 
-    private double total;
+    private Double total;
 
     public OrderWeb() {
     }
@@ -25,7 +25,7 @@ public final class OrderWeb {
         this.customer = customer;
     }
 
-    public OrderWeb(UUID orderNumber, Date orderDate, CustomerWeb customer) {
+    public OrderWeb(UUID orderNumber, Date orderDate, CustomerWeb customer, Double total ) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.customer = customer;
@@ -44,7 +44,7 @@ public final class OrderWeb {
         return customer;
     }
 
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 }

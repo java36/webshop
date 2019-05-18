@@ -46,7 +46,7 @@ public final class CustomerResource {
 
     @GET
     public Response getCustomers(@BeanParam Queries queries){
-        return Response.ok(converter.convertCustomerList(customerService.find(queries.getEmail(), queries.getActive()))).build();
+        return Response.ok(converter.convertCustomerList(customerService.find(queries.getCustomerEmail(), queries.getActive()))).build();
     }
 
     @GET

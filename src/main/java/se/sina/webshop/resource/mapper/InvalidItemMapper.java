@@ -1,6 +1,7 @@
 package se.sina.webshop.resource.mapper;
 
 import se.sina.webshop.service.exception.ItemExceptions.InvalidItemException;
+import se.sina.webshop.service.exception.ItemExceptions.ItemNotInStore;
 import se.sina.webshop.service.exception.ItemExceptions.ItemNumberNotFound;
 import se.sina.webshop.service.exception.ModelExceptions.InvalidModelException;
 import se.sina.webshop.service.exception.ModelExceptions.ModelNameNotFound;
@@ -20,6 +21,9 @@ public class InvalidItemMapper implements ExceptionMapper<InvalidItemException> 
     @Override
     public Response toResponse(InvalidItemException exception) {
         if (exception instanceof ItemNumberNotFound){
+            return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof ItemNotInStore){
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
         }
 

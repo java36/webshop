@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.UUID;
 
-@Entity(name = "[order]")
+@Entity(name = "orders")
 public final class Order {
 
     @Id
@@ -27,7 +27,7 @@ public final class Order {
     private Customer customer;
 
     @Column(nullable = false)
-    private double total;
+    private Double total;
 
     protected Order() {
     }
@@ -36,7 +36,14 @@ public final class Order {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.customer = customer;
-        total = 0.0;
+    }
+
+    // for update
+    public Order(UUID orderNumber, Date orderDate, Customer customer, Double total) {
+        this.orderNumber = orderNumber;
+        this.orderDate = orderDate;
+        this.customer = customer;
+        this.total = total;
     }
 
     public Long getId() {
@@ -75,12 +82,16 @@ public final class Order {
         this.orderDate = orderDate;
     }
 
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public void addToTotal(Double amount){
+        this.total += amount;
     }
 
     @Override
