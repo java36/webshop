@@ -3,7 +3,9 @@ package se.sina.webshop.service;
 import org.springframework.stereotype.Service;
 import se.sina.webshop.model.entity.Employee;
 import se.sina.webshop.repository.EmployeeRepository;
+import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeNumberNotFound;
 import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeUsernameError;
+import se.sina.webshop.service.exception.EmployeeExceptions.InvalidUsernameOrPassword;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,13 @@ public final class EmployeeService {
         employee.setActive(false);
         employeeRepository.save(employee);
     }
-
+    public Employee authenticate(String username, String password){
+        Optional<Employee> employee = employeeRepository.findByUsernameAndPassword(username, password);
+        if(!employee.isPresent()){
+            throw new InvalidUsernameOrPassword("invalid Username Or Password");
+        }
+        return employee.get();
+    }
 
     public void check(String username){
         Optional<Employee> result = employeeRepository.findByUsername(username);
@@ -86,7 +94,7 @@ public final class EmployeeService {
     public Employee check(UUID employeeNumber){
         Optional<Employee> employee = employeeRepository.findByEmployeeNumber(employeeNumber);
         if(!employee.isPresent()){
-            System.out.println("No employee found");
+            throw new EmployeeNumberNotFound("Employee number not found");
         }
         return employee.get();
     }

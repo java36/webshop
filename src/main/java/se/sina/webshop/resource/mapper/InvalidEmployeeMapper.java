@@ -1,7 +1,9 @@
 package se.sina.webshop.resource.mapper;
 
+import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeNumberNotFound;
 import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeUsernameError;
 import se.sina.webshop.service.exception.EmployeeExceptions.InvalidEmployeeException;
+import se.sina.webshop.service.exception.EmployeeExceptions.InvalidUsernameOrPassword;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -16,8 +18,15 @@ public class InvalidEmployeeMapper implements ExceptionMapper<InvalidEmployeeExc
 
     @Override
     public Response toResponse(InvalidEmployeeException exception) {
-        if (exception instanceof EmployeeUsernameError)
+        if (exception instanceof EmployeeUsernameError){
             return Response.status(NOT_ACCEPTABLE).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof EmployeeNumberNotFound){
+            return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof InvalidUsernameOrPassword){
+            return Response.status(NOT_ACCEPTABLE).entity(singletonMap("Error", exception.getMessage())).build();
+        }
 
         return Response.serverError().build();
     }
