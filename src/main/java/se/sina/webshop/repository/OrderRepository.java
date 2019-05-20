@@ -11,8 +11,6 @@ import java.util.UUID;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByOrderNumber(UUID number);
-    List<Order> findAllByCustomerAndActive(Customer customer, Boolean active);
-    List<Order> findAllByCustomer(Customer customer);
     List<Order> findAllByCustomerEmailAndActive(String customerEmail, Boolean active);
     List<Order> findAllByCustomerEmail(String customerEmail);
     List<Order> findAllByActive(Boolean active);
