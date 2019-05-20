@@ -13,5 +13,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findByEmployeeNumber(UUID employeeNumber);
     Optional<Employee> findByUsernameAndActive(String username, Boolean active);
     List<Employee> findAllByActive(Boolean active);
-    Optional<Employee> findByUsernameAndPassword(String username, String password);
+    Optional<Employee> findByUsernameAndPasswordAndActiveTrue(String username, String password);
 }

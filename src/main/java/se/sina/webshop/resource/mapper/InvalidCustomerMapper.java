@@ -31,6 +31,9 @@ public class InvalidCustomerMapper implements ExceptionMapper<InvalidCustomerExc
         if (exception instanceof EmailAlreadyExists){
             return Response.status(NOT_ACCEPTABLE).entity(singletonMap("Error", exception.getMessage())).build();
         }
+        if (exception instanceof CustomerEmailNotFound){
+            return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
 
         return Response.serverError().build();
     }

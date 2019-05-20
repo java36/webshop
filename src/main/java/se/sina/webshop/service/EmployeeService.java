@@ -6,6 +6,7 @@ import se.sina.webshop.repository.EmployeeRepository;
 import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeNumberNotFound;
 import se.sina.webshop.service.exception.EmployeeExceptions.EmployeeUsernameError;
 import se.sina.webshop.service.exception.EmployeeExceptions.InvalidUsernameOrPassword;
+import se.sina.webshop.service.exception.FormatExceptions.NameFormatException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public final class EmployeeService {
 
     public Employee createEmployee(Employee employee){
         check(employee.getUsername());
+        checkUsernameFormat(employee.getUsername());
+        checkNameFormat(employee.getFirstname());
+        checkNameFormat(employee.getLastname());
         employee.setEmployeeNumber(UUID.randomUUID());
         employee.setActive(true);
         return employeeRepository.save(employee);
@@ -54,6 +58,7 @@ public final class EmployeeService {
     public Employee update(UUID employeeNumber, Employee employee){
         Employee existing = check(employeeNumber);
         if(employee.getUsername() != null){
+            checkUsernameFormat(employee.getUsername());
             if(!employee.getUsername().equals(existing.getUsername())){
                 check(employee.getUsername());
             }
@@ -63,9 +68,11 @@ public final class EmployeeService {
             existing.setPassword(employee.getPassword());
         }
         if(employee.getFirstname() != null){
+            checkNameFormat(employee.getFirstname());
             existing.setFirstname(employee.getFirstname());
         }
         if(employee.getLastname() != null){
+            checkNameFormat(employee.getLastname());
             existing.setLastname(employee.getLastname());
         }
         return employeeRepository.save(existing);
@@ -77,7 +84,7 @@ public final class EmployeeService {
         employeeRepository.save(employee);
     }
     public Employee authenticate(String username, String password){
-        Optional<Employee> employee = employeeRepository.findByUsernameAndPassword(username, password);
+        Optional<Employee> employee = employeeRepository.findByUsernameAndPasswordAndActiveTrue(username, password);
         if(!employee.isPresent()){
             throw new InvalidUsernameOrPassword("invalid Username Or Password");
         }
@@ -97,6 +104,16 @@ public final class EmployeeService {
             throw new EmployeeNumberNotFound("Employee number not found");
         }
         return employee.get();
+    }
+    public void checkNameFormat(String name) {
+        if (!name.matches("[A-Za-zÄÖÅäöå]+")) {
+            throw new NameFormatException("Incorrect format for name");
+        }
+    }
+    public void checkUsernameFormat(String name) {
+        if (!name.matches("[A-Za-zÄÖÅäöå0-9]+")) {
+            throw new NameFormatException("Incorrect format for username");
+        }
     }
     public String format(String string){
         return string.trim().toLowerCase();

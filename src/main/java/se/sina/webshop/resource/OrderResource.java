@@ -70,7 +70,7 @@ public final class OrderResource {
     }
 
     @GET
-    @Path("orderItems/{number}")
+    @Path("{orderNumber}/orderItems/{number}")
     public Response getOrderItemByNumber(@PathParam("number") UUID orderItemNumber) {
         return Response.ok(converter.convertFrom(orderService.findOrderItemByNumber(orderItemNumber))).build();
     }
@@ -94,7 +94,7 @@ public final class OrderResource {
         return Response.noContent().build();
     }
     @DELETE
-    @Path("orderItems/{number}")
+    @Path("{orderNumber}/orderItems/{number}")
     public Response deleteOrderItem(@PathParam("number") UUID orderItemNumber) {
         orderService.deleteOrderItem(orderItemNumber);
         return Response.noContent().build();

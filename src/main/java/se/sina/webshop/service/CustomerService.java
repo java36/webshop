@@ -120,9 +120,9 @@ public final class CustomerService {
         return result.get();
     }
     public Customer check(String email){
-        Optional<Customer> result = customerRepository.findByEmail(email);
+        Optional<Customer> result = customerRepository.findByEmailAndActiveTrue(email);
         if(!result.isPresent()){
-            throw new CustomerEmailNotFound("Customer's email address name not found");
+            throw new CustomerEmailNotFound("Customer's email address not found");
         }
         return result.get();
     }
