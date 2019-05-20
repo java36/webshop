@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import se.sina.webshop.model.conversion.Converter;
 import se.sina.webshop.model.entity.Category;
 import se.sina.webshop.model.web.CategoryWeb;
+import se.sina.webshop.resource.authentication.Secured;
 import se.sina.webshop.service.CategoryService;
 
 import javax.ws.rs.*;
@@ -35,6 +36,7 @@ public final class CategoryResource {
     }
 
     @POST
+    @Secured
     public Response createCategory(CategoryWeb categoryWeb){
         Category result = categoryService.createCategory(converter.convertFrom(categoryWeb));
         return Response.created(URI.create(uriInfo
@@ -46,18 +48,6 @@ public final class CategoryResource {
 
     @GET
     public Response getCategories(@BeanParam Queries queries){
-//        if(!queries.getName().equals("")){
-//            List<CategoryWeb> categoryWebs = converter.convertCategoryList(categoryService.find(queries.getName(), "true"));
-//            if(categoryWebs.size() > 0){
-//                return Response.ok(categoryWebs).build();
-//            }
-//            return Response.noContent().build();
-//        }
-//        else if(queries.getActive().equals("false")){
-//            return Response.ok(converter.convertCategoryList(categoryService.find("", "false"))).build();
-//        }
-//
-//        return Response.ok(converter.convertCategoryList(categoryService.find("", ""))).build();
         return Response.ok(converter.convertCategoryList(categoryService.find(queries.getName(), queries.getActive()))).build();
     }
 
@@ -68,6 +58,7 @@ public final class CategoryResource {
     }
 
     @PUT
+    @Secured
     @Path("{number}")
     public Response updateCategory(@PathParam("number") UUID categoryNumber, CategoryWeb categoryWeb){
         categoryService.update(categoryNumber, converter.convertFrom(categoryWeb));
@@ -75,6 +66,7 @@ public final class CategoryResource {
     }
 
     @DELETE
+    @Secured
     @Path("{number}")
     public Response deleteCategory(@PathParam("number") UUID number){
         categoryService.delete(number);

@@ -7,6 +7,7 @@ import se.sina.webshop.model.entity.Category;
 import se.sina.webshop.model.entity.Model;
 import se.sina.webshop.model.web.BrandWeb;
 import se.sina.webshop.model.web.ModelWeb;
+import se.sina.webshop.resource.authentication.Secured;
 import se.sina.webshop.service.ModelService;
 
 import javax.ws.rs.*;
@@ -37,6 +38,7 @@ public final class ModelResource {
     }
 
     @POST
+    @Secured
     public Response createModel(ModelWeb modelWeb){
         Model result = modelService.createModel(converter.convertFrom(modelWeb));
         return Response.created(URI.create(uriInfo
@@ -58,6 +60,7 @@ public final class ModelResource {
     }
 
     @PUT
+    @Secured
     @Path("{number}")
     public Response updateModel(@PathParam("number") UUID number, ModelWeb modelWeb) {
         Brand brand = new Brand(null, null, null);
@@ -66,6 +69,7 @@ public final class ModelResource {
     }
 
     @DELETE
+    @Secured
     @Path("{number}")
     public Response deleteModel(@PathParam("number") UUID modelNumber) {
         modelService.delete(modelNumber);

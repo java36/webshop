@@ -45,6 +45,7 @@ public final class EmployeeResource {
     }
 
     @POST
+    @Secured
     public Response poseEmployee(EmployeeWeb employeeWeb){
 
         Employee employee = employeeService.createEmployee(converter.convertFrom(employeeWeb));
@@ -55,16 +56,19 @@ public final class EmployeeResource {
                 .build();
     }
     @GET
+    @Secured
     public Response getEmployees(@BeanParam Queries queries){
         return Response.ok(converter.convertEmployeeList(employeeService.find(queries.getUsername(), queries.getActive()))).build();
     }
     @GET
+    @Secured
     @Path("{number}")
     public Response getByNum(@PathParam("number") UUID number){
         return Response.ok(converter.convertFrom(employeeService.find(number))).build();
     }
 
     @PUT
+    @Secured
     @Path("{number}")
     public Response updateEmployee(@PathParam("number") UUID number, Employee employee){
         employeeService.update(number, employee);
@@ -72,6 +76,7 @@ public final class EmployeeResource {
     }
 
     @DELETE
+    @Secured
     @Path("{number}")
     public Response deleteEmployee(@PathParam("number") UUID number){
         employeeService.delete(number);

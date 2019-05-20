@@ -5,6 +5,7 @@ import se.sina.webshop.model.conversion.Converter;
 import se.sina.webshop.model.entity.Customer;
 import se.sina.webshop.model.web.CategoryWeb;
 import se.sina.webshop.model.web.CustomerWeb;
+import se.sina.webshop.resource.authentication.Secured;
 import se.sina.webshop.service.CustomerService;
 
 import javax.ws.rs.*;
@@ -45,17 +46,20 @@ public final class CustomerResource {
     }
 
     @GET
+    @Secured
     public Response getCustomers(@BeanParam Queries queries){
         return Response.ok(converter.convertCustomerList(customerService.find(queries.getCustomerEmail(), queries.getActive()))).build();
     }
 
     @GET
+    @Secured
     @Path("{number}")
     public Response getCustomerByNumber(@PathParam("number") UUID customerNumber){
         return Response.ok(converter.convertFrom(customerService.find(customerNumber))).build();
     }
 
     @PUT
+    @Secured
     @Path("{number}")
     public Response updateCustomer(@PathParam("number") UUID customerNumber, CustomerWeb customerWeb){
         customerService.update(customerNumber, converter.convertFrom(customerWeb));
@@ -63,6 +67,7 @@ public final class CustomerResource {
     }
 
     @DELETE
+    @Secured
     @Path("{number}")
     public Response deleteCustomer(@PathParam("number") UUID number){
         customerService.delete(number);

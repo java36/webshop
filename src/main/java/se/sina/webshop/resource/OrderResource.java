@@ -6,6 +6,7 @@ import se.sina.webshop.model.entity.*;
 import se.sina.webshop.model.web.ModelWeb;
 import se.sina.webshop.model.web.OrderItemWeb;
 import se.sina.webshop.model.web.OrderWeb;
+import se.sina.webshop.resource.authentication.Secured;
 import se.sina.webshop.service.OrderService;
 
 import javax.ws.rs.*;
@@ -58,29 +59,34 @@ public final class OrderResource {
                 .build();
     }
     @GET
+    @Secured
     public Response getOrders(@BeanParam Queries queries) {
             List<OrderWeb> orderWebs = converter.convertOrderList(orderService.findOrders(queries.getCustomerEmail(), queries.getActive()));
             return Response.ok(orderWebs).build();
     }
 
     @GET
+    @Secured
     @Path("{number}")
     public Response getOrderByNumber(@PathParam("number") UUID orderNumber) {
         return Response.ok(converter.convertFrom(orderService.findOrderByNumber(orderNumber))).build();
     }
 
     @GET
+    @Secured
     @Path("{orderNumber}/orderItems/{number}")
     public Response getOrderItemByNumber(@PathParam("number") UUID orderItemNumber) {
         return Response.ok(converter.convertFrom(orderService.findOrderItemByNumber(orderItemNumber))).build();
     }
     @GET
+    @Secured
     @Path("{orderNumber}/orderItems")
     public Response getOrderItems(@PathParam("orderNumber") UUID orderNumber, @BeanParam Queries queries) {
         List<OrderItemWeb> orderItemWebs = converter.convertOrderItemList(orderService.findOrderItems(orderNumber, queries.getCustomerEmail(), queries.getActive()));
         return Response.ok(orderItemWebs).build();
     }
     @PUT
+    @Secured
     @Path("{number}")
     public Response updateOrder(@PathParam("number") UUID number, OrderWeb orderWeb) {
         Customer customer = new Customer(null, null, null, null, null);
@@ -88,12 +94,14 @@ public final class OrderResource {
         return Response.noContent().build();
     }
     @DELETE
+    @Secured
     @Path("{number}")
     public Response deleteOrder(@PathParam("number") UUID orderNumber) {
         orderService.deleteOrder(orderNumber);
         return Response.noContent().build();
     }
     @DELETE
+    @Secured
     @Path("{orderNumber}/orderItems/{number}")
     public Response deleteOrderItem(@PathParam("number") UUID orderItemNumber) {
         orderService.deleteOrderItem(orderItemNumber);

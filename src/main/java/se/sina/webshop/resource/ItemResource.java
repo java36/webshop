@@ -7,6 +7,7 @@ import se.sina.webshop.model.entity.Item;
 import se.sina.webshop.model.entity.Model;
 import se.sina.webshop.model.web.ItemWeb;
 import se.sina.webshop.model.web.ModelWeb;
+import se.sina.webshop.resource.authentication.Secured;
 import se.sina.webshop.service.ItemService;
 
 import javax.ws.rs.*;
@@ -37,6 +38,7 @@ public final class ItemResource {
     }
 
     @POST
+    @Secured
     public Response createItem(ItemWeb itemWeb){
         Item result = itemService.createItem(converter.convertFrom(itemWeb));
         return Response.created(URI.create(uriInfo
@@ -52,12 +54,14 @@ public final class ItemResource {
     }
 
     @GET
+    @Secured
     @Path("{number}")
     public Response getByItemNumber(@PathParam("number") UUID itemNumber) {
         return Response.ok(converter.convertFrom(itemService.find(itemNumber))).build();
     }
 
     @PUT
+    @Secured
     @Path("{number}")
     public Response updateItem(@PathParam("number") UUID number, ItemWeb itemWeb) {
         Model model = new Model(null, null, null, null, null);
@@ -66,6 +70,7 @@ public final class ItemResource {
     }
 
     @DELETE
+    @Secured
     @Path("{number}")
     public Response deleteItem(@PathParam("number") UUID itemNumber){
         itemService.delete(itemNumber);

@@ -20,26 +20,9 @@ public final class SingleGenerator {
         this.generator = createGenerator();
         this.key = createKey();
     }
-
-//    public static Boolean validateAuthority(HttpHeaders headers, int reqAuth) {
-//        String token = getToken(headers);
-//        int realAuth = SingleGenerator.getStatus(token);
-//        return realAuth <= reqAuth ? true : false;
-//    }
-
-//    private static String getToken(HttpHeaders headers) {
-//        return headers.getRequestHeader("Authorization").get(0).substring("Bearer".length()).trim();
-//    }
-
-//    public static Integer getStatus(String token) {
-//        return inlogged.get(token);
-//    }
-
-
     public static List<String> getTokens() {
         return tokens;
     }
-
     public static String addToken(String token) {
         tokens.add(token);
         return token;
