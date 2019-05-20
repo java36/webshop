@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import se.sina.webshop.model.conversion.Converter;
 import se.sina.webshop.model.entity.Employee;
 import se.sina.webshop.model.web.EmployeeWeb;
+import se.sina.webshop.resource.authentication.Secured;
 import se.sina.webshop.resource.authentication.SingleGenerator;
 import se.sina.webshop.service.EmployeeService;
 

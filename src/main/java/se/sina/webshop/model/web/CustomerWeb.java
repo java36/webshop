@@ -20,6 +20,8 @@ public final class CustomerWeb {
 
     private String password;
 
+    private Boolean active;
+
     public CustomerWeb() {
     }
 
@@ -34,12 +36,13 @@ public final class CustomerWeb {
         this.email = email;
     }
 
-    public CustomerWeb(UUID customerNumber, String firstname, String lastname, String address, String email) {
+    public CustomerWeb(UUID customerNumber, String firstname, String lastname, String address, String email, Boolean active) {
         this.customerNumber = customerNumber;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.email = email;
+        this.active = active;
     }
 
     public UUID getCustomerNumber() {
@@ -72,5 +75,9 @@ public final class CustomerWeb {
 
     public String getPassword() {
         return password;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

@@ -97,9 +97,11 @@ public final class ModelService {
 
     public Model update(UUID modelNumber, Model model, Brand brand){
         Model existing = check(modelNumber);
-        Brand resultingBrand = brandService.check(existing.getBrand().getBrandNumber());
-        if(model.getName() != null && !existing.getName().equals(model.getName())){
-            checkDoubleNames(model.getName(), brand.getName());
+        Brand result = brandService.check(existing.getBrand().getBrandNumber());
+        if(model.getName() != null){
+            if(!existing.getName().equals(model.getName())){
+                checkDoubleNames(model.getName(), result.getName());
+            }
             existing.setName(model.getName());
         }
         if(model.getPrice() != null){

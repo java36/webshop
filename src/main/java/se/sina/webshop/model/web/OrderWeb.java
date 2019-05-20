@@ -13,6 +13,8 @@ public final class OrderWeb {
 
     private Double total;
 
+    private Boolean active;
+
     public OrderWeb() {
     }
 
@@ -25,11 +27,12 @@ public final class OrderWeb {
         this.customer = customer;
     }
 
-    public OrderWeb(UUID orderNumber, Date orderDate, CustomerWeb customer, Double total ) {
+    public OrderWeb(UUID orderNumber, Date orderDate, CustomerWeb customer, Double total, Boolean active) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.customer = customer;
         this.total = total;
+        this.active = active;
     }
 
     public UUID getOrderNumber() {
@@ -46,5 +49,9 @@ public final class OrderWeb {
 
     public Double getTotal() {
         return total;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

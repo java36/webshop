@@ -98,13 +98,16 @@ public final class BrandService {
     }
 
     public Brand update(UUID brandNumber, Brand brand, Category category){
-        Category resultCategory = categoryService.check(category.getCategoryNumber());
         Brand existing = check(brandNumber);
+        Category result = categoryService.check(existing.getCategory().getCategoryNumber());
         if(brand.getName() != null){
-            checkDoubleNames(brand.getName(), resultCategory.getName());
+            if(!brand.getName().equals(existing.getName())){
+                checkDoubleNames(brand.getName(), result.getName());
+            }
             existing.setName(brand.getName());
         }
         if(category.getCategoryNumber() != null){
+            category = categoryService.check(category.getCategoryNumber());
             brand.setCategory(category);
         }
         return brandRepository.save(existing);

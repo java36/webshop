@@ -8,6 +8,8 @@ public final class CategoryWeb {
 
     private String name;
 
+    private Boolean active;
+
     public CategoryWeb() {
     }
 
@@ -19,9 +21,10 @@ public final class CategoryWeb {
         this.name = name;
     }
 
-    public CategoryWeb(UUID categoryNumber, String name) {
+    public CategoryWeb(UUID categoryNumber, String name, Boolean active) {
         this.categoryNumber = categoryNumber;
         this.name = name;
+        this.active = active;
     }
 
     public UUID getCategoryNumber() {
@@ -30,5 +33,9 @@ public final class CategoryWeb {
 
     public String getName() {
         return name;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

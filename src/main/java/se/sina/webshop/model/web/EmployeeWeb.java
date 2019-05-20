@@ -14,6 +14,8 @@ public final class EmployeeWeb {
 
     private String lastname;
 
+    private Boolean active;
+
     public EmployeeWeb() {
     }
 
@@ -28,12 +30,13 @@ public final class EmployeeWeb {
         this.lastname = lastname;
     }
 
-    public EmployeeWeb(UUID employeeNumber, String username, String password, String firstname, String lastname) {
+    public EmployeeWeb(UUID employeeNumber, String username, String password, String firstname, String lastname, Boolean active) {
         this.employeeNumber = employeeNumber;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.active = active;
     }
 
     public UUID getEmployeeNumber() {
@@ -54,5 +57,9 @@ public final class EmployeeWeb {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

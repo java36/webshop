@@ -10,6 +10,8 @@ public final class BrandWeb {
 
     private CategoryWeb category;
 
+    private Boolean active;
+
     public BrandWeb() {
     }
 
@@ -18,10 +20,11 @@ public final class BrandWeb {
         this.category = category;
     }
 
-    public BrandWeb(UUID brandNumber, String name, CategoryWeb category) {
+    public BrandWeb(UUID brandNumber, String name, CategoryWeb category, Boolean active) {
         this.brandNumber = brandNumber;
         this.name = name;
         this.category = category;
+        this.active = active;
     }
 
     public UUID getBrandNumber() {
@@ -34,5 +37,9 @@ public final class BrandWeb {
 
     public CategoryWeb getCategory() {
         return category;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

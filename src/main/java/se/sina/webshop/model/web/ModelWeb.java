@@ -16,6 +16,8 @@ public final class ModelWeb {
 
     private Double price;
 
+    private Boolean active;
+
     public ModelWeb() {
     }
 
@@ -29,12 +31,13 @@ public final class ModelWeb {
         this.modelNumber = modelNumber;
     }
 
-    public ModelWeb(UUID modelNumber, String name, BrandWeb brand, ModelStatus modelStatus, Double price) {
+    public ModelWeb(UUID modelNumber, String name, BrandWeb brand, ModelStatus modelStatus, Double price, Boolean active) {
         this.modelNumber = modelNumber;
         this.name = name;
         this.brand = brand;
         this.modelStatus = modelStatus;
         this.price = price;
+        this.active = active;
     }
 
     public UUID getModelNumber() {
@@ -55,5 +58,9 @@ public final class ModelWeb {
 
     public Double getPrice() {
         return price;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

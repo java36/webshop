@@ -11,7 +11,7 @@ import java.util.List;
 public final class Converter {
 
     public EmployeeWeb convertFrom(Employee employee){
-        return new EmployeeWeb(employee.getEmployeeNumber(), employee.getUsername(), employee.getPassword(), employee.getFirstname(), employee.getLastname());
+        return new EmployeeWeb(employee.getEmployeeNumber(), employee.getUsername(), employee.getPassword(), employee.getFirstname(), employee.getLastname(), employee.getActive());
     }
 
     public Employee convertFrom(EmployeeWeb employeeWeb){
@@ -23,7 +23,7 @@ public final class Converter {
     }
 
     public CategoryWeb convertFrom(Category category){
-        return new CategoryWeb(category.getCategoryNumber(), category.getName());
+        return new CategoryWeb(category.getCategoryNumber(), category.getName(), category.getActive());
     }
 
     public Brand convertFrom(BrandWeb brandWeb){
@@ -31,7 +31,7 @@ public final class Converter {
     }
 
     public BrandWeb convertFrom(Brand brand){
-        return new BrandWeb(brand.getBrandNumber(), brand.getName(), convertFrom(brand.getCategory()));
+        return new BrandWeb(brand.getBrandNumber(), brand.getName(), convertFrom(brand.getCategory()), brand.getActive());
     }
 
     public Model convertFrom(ModelWeb modelWeb){
@@ -39,7 +39,7 @@ public final class Converter {
     }
 
     public ModelWeb convertFrom(Model model){
-        return new ModelWeb(model.getModelNumber(), model.getName(), convertFrom(model.getBrand()), model.getModelStatus(), model.getPrice());
+        return new ModelWeb(model.getModelNumber(), model.getName(), convertFrom(model.getBrand()), model.getModelStatus(), model.getPrice(), model.getActive());
     }
 
     public Item convertFrom(ItemWeb itemWeb){
@@ -55,7 +55,7 @@ public final class Converter {
     }
 
     public CustomerWeb convertFrom(Customer customer){
-        return new CustomerWeb(customer.getCustomerNumber(), customer.getFirstname(), customer.getLastname(), customer.getAddress(), customer.getEmail());
+        return new CustomerWeb(customer.getCustomerNumber(), customer.getFirstname(), customer.getLastname(), customer.getAddress(), customer.getEmail(), customer.getActive());
     }
 
     public Order convertFrom(OrderWeb orderWeb){
@@ -63,7 +63,7 @@ public final class Converter {
     }
 
     public OrderWeb convertFrom(Order order){
-        return new OrderWeb(order.getOrderNumber(), order.getOrderDate(), convertFrom(order.getCustomer()), order.getTotal());
+        return new OrderWeb(order.getOrderNumber(), order.getOrderDate(), convertFrom(order.getCustomer()), order.getTotal(), order.getActive());
     }
 
     public OrderItem convertFrom(OrderItemWeb orderItemWeb){
