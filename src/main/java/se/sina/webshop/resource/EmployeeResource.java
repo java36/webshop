@@ -88,7 +88,6 @@ public final class EmployeeResource {
     public Response authenticate(EmployeeWeb employeeWeb){
         EmployeeWeb result = converter.convertFrom(employeeService.authenticate(employeeWeb.getUsername(), employeeWeb.getPassword()));
         String token = issueToken(employeeWeb.getUsername());
-        SingleGenerator.addToken(token);
         return Response.ok(result).header(AUTHORIZATION, "Bearer " + token).build();
     }
 

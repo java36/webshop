@@ -4,6 +4,7 @@ import se.sina.webshop.service.exception.BrandExceptions.*;
 import se.sina.webshop.service.exception.OrderExceptions.InvalidOrderException;
 import se.sina.webshop.service.exception.OrderExceptions.OrderItemNumberNotFound;
 import se.sina.webshop.service.exception.OrderExceptions.OrderNumberNotFound;
+import se.sina.webshop.service.exception.OrderExceptions.OrderUndeletable;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -24,6 +25,9 @@ public class InvalidOrderMapper implements ExceptionMapper<InvalidOrderException
         }
         if (exception instanceof OrderItemNumberNotFound){
             return Response.status(NOT_FOUND).entity(singletonMap("Error", exception.getMessage())).build();
+        }
+        if (exception instanceof OrderUndeletable){
+            return Response.status(NOT_ACCEPTABLE).entity(singletonMap("Error", exception.getMessage())).build();
         }
 
 

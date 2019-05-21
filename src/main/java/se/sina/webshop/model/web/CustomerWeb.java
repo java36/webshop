@@ -29,6 +29,7 @@ public final class CustomerWeb {
         this.customerNumber = customerNumber;
     }
 
+    // for post
     public CustomerWeb(String firstname, String lastname, String address, String email) {
         this.firstname = firstname;
         this.lastname = lastname;

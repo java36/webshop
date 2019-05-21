@@ -50,19 +50,9 @@ public final class ItemService {
 
         if(!isBlank(model) && (!isBlank(itemStatus))){
             ItemStatus status = ItemStatus.valueOf(itemStatus);
-//            List<Model> models = modelService.find(model, "", "");
-//            if(models.size() > 0){
-//                return itemRepository.findAllByModelAndItemStatus(models.get(0), status);
-//            }
-//            throw new ModelNameNotFound("Model name not found");
             return itemRepository.findAllByModelNameAndItemStatus(model, status);
         }
         else if(!isBlank(model)){
-//            List<Model> models = modelService.find(model, "", "");
-//            if(models.size() > 0){
-//                return itemRepository.findAllByModelAndItemStatus(models.get(0), ItemStatus.STORED);
-//            }
-//            throw new ModelNameNotFound("Model name not found");
             return itemRepository.findAllByModelNameAndItemStatus(model, ItemStatus.STORED);
 
         }
@@ -92,9 +82,9 @@ public final class ItemService {
         return item;
     }
 
+    //checks if a model is sold out or in store
     public void checkModelStatus(Item item){
         Model model = item.getModel();
-//        List<Item> items = itemRepository.findAllByModelAndItemStatus(model, ItemStatus.STORED);
         List<Item> items = itemRepository.findAllByModelNameAndItemStatus(model.getName(), ItemStatus.STORED);
         if(items.size() == 0){
             model.setModelStatus(ModelStatus.SOLDOUT);
@@ -106,6 +96,7 @@ public final class ItemService {
         }
     }
 
+    //checks to see if an item with the entered number exists, and then returns it
     public Item check(UUID number){
 
         Optional<Item> result = itemRepository.findByItemNumber(number);
@@ -115,6 +106,7 @@ public final class ItemService {
         return result.get();
     }
 
+    //checks if an item with the given number exists and then returns it only if the item is in store
     public Item checkItemStatus(UUID number){
         Optional<Item> result = itemRepository.findByItemNumber(number);
         if(!result.isPresent()){

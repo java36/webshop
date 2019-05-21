@@ -16,12 +16,9 @@ import java.security.Key;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
-
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-
-        String authorizationHeader =
-                requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if (!isTokenBasedAuthentication(authorizationHeader)) {
             abortWithUnauthorized(requestContext);
@@ -39,13 +36,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     }
 
     private boolean isTokenBasedAuthentication(String authorizationHeader) {
-
         return authorizationHeader != null && authorizationHeader.toLowerCase()
                 .startsWith("Bearer".toLowerCase() + " ");
     }
 
     private void abortWithUnauthorized(ContainerRequestContext requestContext) {
-
         requestContext.abortWith(
                 Response.status(Response.Status.UNAUTHORIZED).build());
     }

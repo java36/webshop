@@ -11,7 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class SingleGenerator {
 
-    private static final List<String> tokens = Collections.synchronizedList(new ArrayList<String>());
     private static final SingleGenerator instance = new SingleGenerator();
     private static Key key;
     private KeyGenerator generator;
@@ -19,13 +18,6 @@ public final class SingleGenerator {
     private SingleGenerator() {
         this.generator = createGenerator();
         this.key = createKey();
-    }
-    public static List<String> getTokens() {
-        return tokens;
-    }
-    public static String addToken(String token) {
-        tokens.add(token);
-        return token;
     }
 
     public static SingleGenerator getInstance() {

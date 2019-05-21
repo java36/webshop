@@ -23,6 +23,7 @@ public final class EmployeeWeb {
         this.employeeNumber = employeeNumber;
     }
 
+    //for post
     public EmployeeWeb(String username, String password, String firstname, String lastname) {
         this.username = username;
         this.password = password;

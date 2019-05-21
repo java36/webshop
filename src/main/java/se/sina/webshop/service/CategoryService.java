@@ -90,6 +90,7 @@ public final class CategoryService {
         throw new CategoryUndeletable("unable to delete category");
     }
 
+    //checks to see if a category with the number entered exists
     public Category check(UUID number){
 
         Optional<Category> category = categoryRepository.findByCategoryNumber(number);
@@ -98,6 +99,8 @@ public final class CategoryService {
         }
         return category.get();
     }
+
+    // checks to see if a category with the name entered exists
     public Category check(String name){
         Optional<Category> result = categoryRepository.findByName(name);
         if(!result.isPresent()){
@@ -105,6 +108,8 @@ public final class CategoryService {
         }
         return result.get();
     }
+
+    //checks if the entered name is already in the database
     public void checkDoubleNames(String categoryName){
         Optional<Category> result = categoryRepository.findByName(categoryName);
         if(result.isPresent()){

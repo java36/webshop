@@ -15,6 +15,7 @@ public final class BrandWeb {
     public BrandWeb() {
     }
 
+    // for post
     public BrandWeb(String name, CategoryWeb category) {
         this.name = name;
         this.category = category;

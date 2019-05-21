@@ -19,6 +19,7 @@ public final class ItemWeb {
         this.itemNumber = itemNumber;
     }
 
+    // for post
     public ItemWeb(ItemStatus itemStatus, ModelWeb model) {
         this.itemStatus = itemStatus;
         this.model = model;

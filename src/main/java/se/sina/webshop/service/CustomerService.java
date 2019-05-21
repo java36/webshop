@@ -111,6 +111,7 @@ public final class CustomerService {
         return customerRepository.save(customer);
     }
 
+    //checks to see if a customer with the entered number exists and returns it
     public Customer check(UUID number){
 
         Optional<Customer> result = customerRepository.findByCustomerNumber(number);
@@ -119,6 +120,8 @@ public final class CustomerService {
         }
         return result.get();
     }
+
+    // checks to see if a customer with the entered email exists and returns it
     public Customer check(String email){
         Optional<Customer> result = customerRepository.findByEmailAndActiveTrue(email);
         if(!result.isPresent()){
@@ -126,18 +129,23 @@ public final class CustomerService {
         }
         return result.get();
     }
+
+    //checks if the email is already in use in the db
     public void validate(String email){
         Optional<Customer> result = customerRepository.findByEmail(email);
         if(result.isPresent()){
             throw new EmailAlreadyExists("The email address is already taken");
         }
     }
+
+    //checks that the email entered by the user corresponds to the format of an email address
     public void checkEmailFormat(String email) {
         if (!email.matches("[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z0-9]+")) {
             throw new EmailFormatException("incorrect format for entered email");
         }
     }
 
+    //checks that names entered by the user dont contain any numbers or punctuations
     public void checkNameFormat(String name) {
         if (!name.matches("[A-Za-zÄÖÅäöå]+")) {
             throw new NameFormatException("Incorrect format for name");

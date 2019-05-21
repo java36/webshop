@@ -126,6 +126,7 @@ public final class ModelService {
         throw new ModelUndeletable("Unable to delete model");
     }
 
+    //checks if a model with the given number exists and then returns it
     public Model check(UUID number){
 
         Optional<Model> result = modelRepository.findByModelNumber(number);
@@ -134,6 +135,8 @@ public final class ModelService {
         }
         return result.get();
     }
+
+    // checks if a model with the given name exists and then returns it
     public Model check(String name){
         Optional<Model> result = modelRepository.findByName(name);
         if(!result.isPresent()){
@@ -142,6 +145,7 @@ public final class ModelService {
         return result.get();
     }
 
+    //checks if a model with the same name and same brand already exists
     public void checkDoubleNames(String modelName, String brandName){
         Optional<Model> result = modelRepository.findByNameAndBrandName(modelName, brandName);
         if(result.isPresent()){

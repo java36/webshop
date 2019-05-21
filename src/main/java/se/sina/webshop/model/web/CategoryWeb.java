@@ -17,6 +17,7 @@ public final class CategoryWeb {
         this.categoryNumber = categoryNumber;
     }
 
+    // for post
     public CategoryWeb(String name) {
         this.name = name;
     }

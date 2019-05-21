@@ -14,6 +14,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAllByCustomerEmailAndActive(String customerEmail, Boolean active);
     List<Order> findAllByCustomerEmail(String customerEmail);
     List<Order> findAllByActive(Boolean active);
-    List<Order> findAllByActiveFalse();
-    List<Order> findAllByActiveTrue();
 }

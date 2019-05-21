@@ -10,10 +10,7 @@ import java.util.UUID;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     Optional<OrderItem> findByOrderItemNumber(UUID number);
-    List<OrderItem> findAllByOrder(Order order);
     List<OrderItem> findAllByOrderOrderNumber(UUID orderNumber);
     List<OrderItem> findAllByOrderOrderNumberAndShipped(UUID orderNumber, Boolean shipped);
-    List<OrderItem> findAllByShippedTrue();
-    List<OrderItem> findAllByShippedFalse();
     List<OrderItem> findAllByShipped(Boolean shipped);
 }

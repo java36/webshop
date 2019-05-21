@@ -12,6 +12,7 @@ import se.sina.webshop.service.exception.CustomerExceptions.InvalidCustomerExcep
 import se.sina.webshop.service.exception.FormatExceptions.ActiveNotValid;
 import se.sina.webshop.service.exception.OrderExceptions.OrderItemNumberNotFound;
 import se.sina.webshop.service.exception.OrderExceptions.OrderNumberNotFound;
+import se.sina.webshop.service.exception.OrderExceptions.OrderUndeletable;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -118,38 +119,6 @@ public final class OrderService {
             return orderItemRepository.findAll();
     }
 
-//    public List<OrderItem> findCustomerOrderItems(String customerEmail, String active){
-//        active = format(active);
-//        Customer customer = customerService.check(customerEmail);
-//        List<Order> orders;
-//        List<OrderItem> orderItems = new ArrayList<>();
-//        if(active.equals("true")){
-//            orders = findOrders(customerEmail, "true");
-//            for(Order o : orders){
-//                List<OrderItem> resultItems = orderItemRepository.findAllByOrder(o);
-//                for(OrderItem item : orderItems){
-//                    if(!item.isShipped()){
-//                        orderItems.add(item);
-//                    }
-//                }
-//            }
-//            return orderItems;
-//        }
-//        else if(active.equals("false")){
-//            orders = findOrders(customerEmail, "false");
-//            for(Order o : orders){
-//                orderItems.addAll(orderItemRepository.findAllByOrder(o));
-//            }
-//            return orderItems;
-//        }
-//        else if(active.equals("")){
-//            orders = findOrders(customerEmail, "");
-//            orders.forEach(order -> orderItems.addAll(orderItemRepository.findAllByOrder(order)));
-//            return orderItems;
-//        }
-//        throw new ActiveNotValid("Active entered is not valid");
-//    }
-
     public Order updateOrder(UUID orderNumber, Order order){
         Order existing = checkOrder(orderNumber);
         if(order.getOrderDate() != null){
@@ -170,17 +139,21 @@ public final class OrderService {
     }
 
     public void deleteOrder(UUID orderNumber){
+        checkOrderStatus(orderNumber);
         Order order = checkOrder(orderNumber);
         order.setActive(false);
         orderRepository.save(order);
     }
+
+    //checks if there are unshipped orderItems belonging to the order, if not throws an exception
     public void checkOrderStatus(UUID orderNumber){
         List<OrderItem> orderItems = orderItemRepository.findAllByOrderOrderNumberAndShipped(orderNumber, false);
-        if(orderItems.size() == 0){
-            deleteOrder(orderNumber);
+        if(orderItems.size() != 0){
+            throw new OrderUndeletable("Order has unshipped orderItems and cannot be deleted");
         }
     }
 
+    //checks if an order with the entered number exists and returns the order
     public Order checkOrder(UUID orderNumber){
 
         Optional<Order> result = orderRepository.findByOrderNumber(orderNumber);
@@ -189,6 +162,8 @@ public final class OrderService {
         }
         return result.get();
     }
+
+    //checks if an orderItem with the entered number exists and returns the orderItem
     public OrderItem checkOrderItem(UUID orderItemNumber){
 
         Optional<OrderItem> result = orderItemRepository.findByOrderItemNumber(orderItemNumber);

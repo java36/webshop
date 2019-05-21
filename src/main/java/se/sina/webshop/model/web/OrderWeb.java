@@ -22,6 +22,7 @@ public final class OrderWeb {
         this.orderNumber = orderNumber;
     }
 
+    //post
     public OrderWeb(Date orderDate, CustomerWeb customer) {
         this.orderDate = orderDate;
         this.customer = customer;

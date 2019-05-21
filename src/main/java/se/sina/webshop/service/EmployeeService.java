@@ -91,6 +91,7 @@ public final class EmployeeService {
         return employee.get();
     }
 
+    //checks to see if the username is already taken
     public void check(String username){
         Optional<Employee> result = employeeRepository.findByUsername(username);
         if(result.isPresent()){
@@ -98,6 +99,7 @@ public final class EmployeeService {
         }
     }
 
+    // checks if an employee with entered employee number exists and then returns it
     public Employee check(UUID employeeNumber){
         Optional<Employee> employee = employeeRepository.findByEmployeeNumber(employeeNumber);
         if(!employee.isPresent()){
@@ -105,11 +107,15 @@ public final class EmployeeService {
         }
         return employee.get();
     }
+
+    //checks that the names entered by the employer dont contain any numbers or punctuations
     public void checkNameFormat(String name) {
         if (!name.matches("[A-Za-zÄÖÅäöå]+")) {
             throw new NameFormatException("Incorrect format for name");
         }
     }
+
+    //checks that the username chosen by the employee corresponds to the format of a username
     public void checkUsernameFormat(String name) {
         if (!name.matches("[A-Za-zÄÖÅäöå0-9]+")) {
             throw new NameFormatException("Incorrect format for username");

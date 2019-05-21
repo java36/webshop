@@ -123,6 +123,7 @@ public final class BrandService {
         throw new BrandUndeletable("Unable to delete brand");
     }
 
+    // checks to see if a brand with the entered number exists
     public Brand check(UUID number){
 
         Optional<Brand> result = brandRepository.findByBrandNumber(number);
@@ -131,6 +132,8 @@ public final class BrandService {
         }
         return result.get();
     }
+
+    //checks to see if a brand with the entered name exists
     public Brand check(String name){
         Optional<Brand> result = brandRepository.findByName(name);
         if(!result.isPresent()){
@@ -139,12 +142,14 @@ public final class BrandService {
         return result.get();
     }
 
+    // checks to see if the brand name already exists for the category
     public void checkDoubleNames(String brandName, String categoryName){
         Optional<Brand> result = brandRepository.findByNameAndCategoryName(brandName, categoryName);
         if(result.isPresent()){
             throw new BrandNameAlreadyExists("Brand name already exists");
         }
     }
+
     public String format(String string){
         return string.trim().toLowerCase();
     }
